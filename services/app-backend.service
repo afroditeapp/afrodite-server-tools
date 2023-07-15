@@ -1,0 +1,18 @@
+# app-backend systemd service
+
+# This service should not be enabled.
+# The app-manager program controls this service.
+
+[Unit]
+Description=App backend
+Requires=app-manager.service
+
+[Service]
+Type=simple
+User=app
+ExecStart=bash -l -c /app-secure-storage/app/binaries/app-backend
+WorkingDirectory=/app-secure-storage/app/backend-working-dir
+Environment="RUST_LOG=info"
+
+[Install]
+WantedBy=multi-user.target

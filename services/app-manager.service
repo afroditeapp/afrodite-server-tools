@@ -1,0 +1,15 @@
+# app-manager systemd service
+[Unit]
+Description=App server instance manager
+After=network.target
+Conflicts=umount.target
+
+[Service]
+Type=simple
+User=app
+ExecStart=bash -l -c /home/app/binaries/app-manager
+WorkingDirectory=/home/app/manager-working-dir
+Environment="RUST_LOG=info"
+
+[Install]
+WantedBy=multi-user.target

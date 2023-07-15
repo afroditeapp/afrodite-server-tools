@@ -1,0 +1,12 @@
+# Load ipset and iptables
+[Unit]
+Description=Load ipset and iptables
+Before=network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=oneshot
+ExecStart=/app-server-tools/tools/load-iptables.sh
+
+[Install]
+WantedBy=multi-user.target

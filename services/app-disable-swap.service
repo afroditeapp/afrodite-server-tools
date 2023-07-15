@@ -1,0 +1,13 @@
+# Disable swap
+# TODO: perhaps also edit /etc/fstab if needed?
+[Unit]
+Description=Disable swap
+Before=network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=oneshot
+ExecStart=swapoff -a
+
+[Install]
+WantedBy=multi-user.target
