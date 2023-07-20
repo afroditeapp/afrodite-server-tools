@@ -95,7 +95,7 @@ Create script:
 
 cd
 mkdir -p src
-rsync -av --delete --progress --exclude="/target" --exclude="/.git" /APP-MANAGER-SRC/ ~/src
+rsync -av --delete --progress --exclude="/target" /APP-MANAGER-SRC/ ~/src
 
 cd ~/src
 cargo build --release
