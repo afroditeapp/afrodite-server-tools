@@ -32,6 +32,7 @@ chmod u+x /app-server-tools/manager-tools/open-encryption.sh
 chmod u+x /app-server-tools/manager-tools/close-encryption.sh
 chmod u+x /app-server-tools/manager-tools/start-backend.sh
 chmod u+x /app-server-tools/manager-tools/stop-backend.sh
+chmod u+x /app-server-tools/manager-tools/print-logs.sh
 chmod u+x /app-server-tools/tools/load-iptables.sh
 
 # Create location for ipset and iptables
