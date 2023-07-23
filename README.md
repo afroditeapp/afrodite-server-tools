@@ -36,6 +36,15 @@ sudo chown ubuntu:ubuntu test/
 
 sudo umount /dev/mapper/app-encrypted-data
 
+### Make encrypted fs larger
+
+
+sudo truncate --size=+1G encrypted-filesystem.data
+sudo cryptsetup luksOpen encrypted-filesystem.data app-encrypted-data
+sudo e2fsck -f /dev/mapper/app-encrypted-data
+sudo resize2fs /dev/mapper/app-encrypted-data
+
+
 ## Fail2Ban
 
 sudo apt install fail2ban
@@ -98,7 +107,7 @@ mkdir -p src
 rsync -av --delete --progress --exclude="/target" /APP-MANAGER-SRC/ ~/src
 
 cd ~/src
-cargo build --release
+cargo build --bin app-manager --release
 sudo -u app mkdir -p /home/app/binaries
 sudo -u app mkdir -p /home/app/manager-working-dir
 sudo systemctl stop app-manager
