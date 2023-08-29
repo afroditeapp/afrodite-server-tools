@@ -13,6 +13,8 @@ User=app
 ExecStart=bash -l -c /app-secure-storage/app/binaries/app-backend
 WorkingDirectory=/app-secure-storage/app/backend-working-dir
 Environment="RUST_LOG=info"
+KillMode=mixed
+TimeoutStopSec=300
 
 [Install]
 WantedBy=multi-user.target
