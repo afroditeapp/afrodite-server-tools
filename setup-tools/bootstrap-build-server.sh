@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -eux
 
 # This should be run as user app
 if [ "$USER" != "app" ]; then
@@ -12,13 +12,16 @@ chmod 600 /app-secure-storage/app/.ssh/app-backend-download.key
 # Move to secure home dir
 cd /app-secure-storage/app
 
-curl https://sh.rustup.rs -sSf | sh -s -- -y
+# Install Rust if not installed
+if [ ! -f "$HOME/.cargo/env" ]; then
+    curl https://sh.rustup.rs -sSf | sh -s -- -y
+fi
 source "$HOME/.cargo/env"
 
 # Might not be needed
 cd /app-secure-storage/app
 
-mkdir sources
+mkdir -p sources
 cd sources
 git clone -c "core.sshCommand=ssh -i /app-secure-storage/app/.ssh/app-manager-download.key" --depth 1 git@github.com:jutuon/app-manager.git
 cd app-manager

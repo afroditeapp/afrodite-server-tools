@@ -1,0 +1,24 @@
+---
+- name: Copy service files
+  copy:
+    src: ../services/
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: 0644
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+- name: Enable 'app-manager' service
+  systemd:
+    name: app-manager
+    enabled: yes
+- name: Enable 'app-load-iptables' service
+  systemd:
+    name: app-load-iptables
+    enabled: yes
+- name: Enable 'app-disable-swap' service
+  systemd:
+    name: app-disable-swap
+    enabled: yes
+    state: started

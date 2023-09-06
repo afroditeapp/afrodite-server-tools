@@ -1,0 +1,28 @@
+---
+- name: Setup server
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Download dependencies
+    include_tasks: tasks/apt-dependencies.yaml
+  - name: Create users
+    include_tasks: tasks/create-users.yaml
+  - name: Setup services
+    include_tasks: tasks/setup-services.yaml
+  - name: Setup tool scripts
+    include_tasks: tasks/setup-tool-scripts.yaml
+  - name: Setup firewall
+    include_tasks: tasks/setup-firewall.yaml
+  - name: Setup encrypted filesystem
+    include_tasks: tasks/setup-encrypted-fs.yaml
+
+  - name: Check does custom post-setup script exist
+    stat:
+      path: /app-custom/post-setup.sh
+    register: post_setup_stat
+  - name: Run custom post-setup script
+    command: bash -eux /app-custom/post-setup.sh
+    when: post_setup_stat.stat.exists == True
+
+  - debug:
+      msg: "Server setup is now complete"

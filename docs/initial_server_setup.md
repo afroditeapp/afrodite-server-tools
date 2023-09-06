@@ -28,14 +28,14 @@ sudo chmod 644 /app-keys/app-server-tools-download.key
 
 ```
   # If this file is omitted then SSH will be available to every IP after country filter
-  - path: /home/app/ssh_ip.txt
+  - path: /app-custom/ssh_ip.txt
     owner: app:app
     permissions: "0644"
     defer: true
     append: false
     content: |
       192.168.0.0/16
-  - path: /home/app/app_manager_ip.txt
+  - path: /app-custom/app_manager_ip.txt
     owner: app:app
     permissions: "0644"
     defer: true

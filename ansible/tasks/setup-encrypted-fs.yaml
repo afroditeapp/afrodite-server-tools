@@ -1,0 +1,74 @@
+---
+- name: Set variables
+  set_fact:
+    encrypted_file_path: /app-encrypted-filesystem/encrypted-filesystem.data
+    mapper_file_path: /dev/mapper/app-encrypted-data-mapper
+    encrypted_file_size: 5G
+
+- name: Create directory for encrypted filesystem data file
+  file:
+    path: /app-encrypted-filesystem
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Check if encrypted filesystem data file exists
+  stat:
+    path: "{{ encrypted_file_path }}"
+  register: encrypted_file_stat
+- name: Create encrypted data file
+  command: "fallocate -l {{ encrypted_file_size }} {{ encrypted_file_path }}"
+  when: encrypted_file_stat.stat.exists == False
+- name: Setup encryption with default password
+  shell:
+    cmd: "cryptsetup --key-file - luksFormat {{ encrypted_file_path }} <<< \
+      password"
+    executable: /bin/bash
+  when: encrypted_file_stat.stat.exists == False
+- name: Open encryption
+  shell:
+    cmd: "cryptsetup --key-file - luksOpen {{ encrypted_file_path }} \
+      app-encrypted-data-mapper <<< password"
+    executable: /bin/bash
+  when: encrypted_file_stat.stat.exists == False
+- name: Create filesystem
+  command: "mkfs.ext4 {{ mapper_file_path }}"
+  when: encrypted_file_stat.stat.exists == False
+
+- name: Create directory for mounting encrypted filesystem
+  file:
+    path: /app-secure-storage
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Check if encrypted filesystem is mounted
+  stat:
+    path: /app-secure-storage/app
+  register: is_encrypted_filesystem_mounted_stat
+- name: Mount encrypted filesystem
+  command: "mount {{ mapper_file_path }} /app-secure-storage"
+  when: is_encrypted_filesystem_mounted_stat.stat.exists == False
+- name: Create secure storage directory for 'app' user
+  file:
+    path: /app-secure-storage/app
+    state: directory
+    owner: app
+    group: app
+    mode: 0755
+- name: Create directory for binaries
+  file:
+    path: /app-secure-storage/app/binaries
+    state: directory
+    owner: app
+    group: app
+    mode: 0755
+- name: Create working directory for backend
+  file:
+    path: /app-secure-storage/app/backend-working-dir
+    state: directory
+    owner: app
+    group: app
+    mode: 0755

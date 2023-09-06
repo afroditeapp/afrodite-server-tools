@@ -1,0 +1,22 @@
+---
+- name: Create 'app' user
+  user:
+    name: app
+    password_lock: true
+    generate_ssh_key: false
+    shell: /bin/bash
+- name: Limit sudo for 'app' user
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^app '
+    line: "app ALL=(ALL) NOPASSWD: \
+      /usr/sbin/reboot, \
+      /app-server-tools/manager-tools/is-default-encryption-password.sh, \
+      /app-server-tools/manager-tools/change-encryption-password.sh, \
+      /app-server-tools/manager-tools/open-encryption.sh, \
+      /app-server-tools/manager-tools/close-encryption.sh, \
+      /app-server-tools/manager-tools/start-backend.sh, \
+      /app-server-tools/manager-tools/stop-backend.sh, \
+      /app-server-tools/manager-tools/print-logs.sh"
+    validate: 'visudo -cf %s'

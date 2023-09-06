@@ -9,13 +9,13 @@ iptables -A OUTPUT -o lo -j ACCEPT
 # Allow established connections
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
 
-if [ ! -f "/home/app/disable_country_fi_filter" ]; then
+if [ ! -f "/app-custom/disable_country_fi_filter" ]; then
     # Drop all new connections/packets outside Finland.
     iptables -A INPUT -m set ! --match-set country_fi src -j DROP
 fi
 
 # Allow SSH access if specific access is not configured
-if [ ! -f "/home/app/ssh_ip.txt" ]; then
+if [ ! -f "/app-custom/ssh_ip.txt" ]; then
     iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 fi
 # Allow SSH access from specific IPs

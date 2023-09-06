@@ -4,11 +4,8 @@
 # - ssh_authorized_keys
 
 packages:
-  - python3            # Python is for generating IP block list
-  - python3-requests
-  - ipset
-  - git                # Downloads app-server-tools repository
-  - fail2ban           # Fail2Ban
+  - ansible
+  - git
 
 ssh_pwauth: false
 disable_root: true
@@ -25,9 +22,4 @@ users:
 #   ssh_authorized_keys:
 #     - key
     sudo: ALL=(ALL) NOPASSWD:ALL
-    shell: /bin/bash
-  - name: app
-    lock_passwd: true
-    ssh_redirect_user: true
-    sudo: ALL=(ALL) NOPASSWD: /usr/sbin/reboot, /app-server-tools/manager-tools/is-default-encryption-password.sh, /app-server-tools/manager-tools/change-encryption-password.sh, /app-server-tools/manager-tools/open-encryption.sh, /app-server-tools/manager-tools/close-encryption.sh, /app-server-tools/manager-tools/start-backend.sh, /app-server-tools/manager-tools/stop-backend.sh, /app-server-tools/manager-tools/print-logs.sh
     shell: /bin/bash

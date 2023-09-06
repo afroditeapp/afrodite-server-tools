@@ -1,0 +1,19 @@
+---
+- name: Add excecutable permissions to scripts in 'manager-tools' directory
+  file:
+    path: "../manager-tools/{{ item }}"
+    mode: "+x"
+  with_items:
+    - is-default-encryption-password.sh
+    - change-encryption-password.sh
+    - open-encryption.sh
+    - close-encryption.sh
+    - start-backend.sh
+    - stop-backend.sh
+    - print-logs.sh
+- name: Add excecutable permissions to scripts in 'tools' directory
+  file:
+    path: ../tools/{{ item }}
+    mode: "+x"
+  with_items:
+    - load-iptables.sh

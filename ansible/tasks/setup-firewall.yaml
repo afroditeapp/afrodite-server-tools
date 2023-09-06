@@ -1,0 +1,85 @@
+---
+- name: Set variables
+  set_fact:
+    fi_ip_list_name: fi_ip.txt
+    ssh_ip_list_name: ssh_ip.txt
+    app_manager_ip_list_name: app_manager_ip.txt
+
+- name: Create directory for firewall rules
+  file:
+    path: /app-iptables
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Check if IP list for Finland already exists
+  stat:
+    path: "/home/app/{{ fi_ip_list_name }}"
+  register: fi_ip_stat
+- name: Download IP list for Finland
+  command:
+    cmd: "python3 \
+        ../setup-tools/download-ip-list.py \
+        --file /home/app/{{ fi_ip_list_name }} \
+       --country fi"
+  become_user: app
+  when: fi_ip_stat.stat.exists == False
+
+- name: Create 'country_fi' ipset
+  command: "ipset create -exist country_fi hash:net"
+- name: Setup 'country_fi' ipset
+  command: "python3 ../setup-tools/setup-ipset.py \
+        --file /home/app/{{ fi_ip_list_name }} \
+        --name country_fi"
+
+- name: Create 'ssh_access' ipset
+  command: "ipset create -exist ssh_access hash:net"
+- name: Check if config for 'ssh_access' ipset exists
+  stat:
+    path: /app-custom/{{ ssh_ip_list_name }}
+  register: ssh_access_stat
+- name: Setup 'ssh_access' ipset
+  command: "python3 ../setup-tools/setup-ipset.py \
+        --file /app-custom/{{ ssh_ip_list_name }} \
+        --name ssh_access"
+  when: ssh_access_stat.stat.exists == True
+
+- name: Create 'app_manager_access' ipset
+  command: "ipset create -exist app_manager_access hash:net"
+- name: Check if config for 'app_manager_access' ipset exists
+  stat:
+    path: /app-custom/{{ app_manager_ip_list_name }}
+  register: app_manager_access_stat
+- name: Setup 'app_manager_access' ipset
+  command: "python3 ../setup-tools/setup-ipset.py \
+        --file /app-custom/{{ app_manager_ip_list_name }} \
+        --name app_manager_access"
+  when: app_manager_access_stat.stat.exists == True
+
+- name: Save ipset rules
+  shell: "ipset save > /app-iptables/ipset.save"
+
+- name: Check if script for custom iptables rules exists
+  stat:
+    path: /app-custom/setup-iptables.sh
+  register: iptables_script_stat
+- name: Setup custom iptables rules
+  command: bash -eux /app-custom/setup-iptables.sh
+  when: iptables_script_stat.stat.exists == True
+- name: Setup default iptables rules
+  command: bash -eux ../setup-tools/setup-iptables.sh
+  when: iptables_script_stat.stat.exists == False
+
+- name: Save iptables rules
+  shell: "iptables-save > /app-iptables/ip4tables.save"
+- name: Save iptables6 rules
+  shell: "ip6tables-save > /app-iptables/ip6tables.save"
+
+- name: Copy fail2ban config
+  copy:
+    src: ../files/jail.local
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
