@@ -1,16 +1,38 @@
-#!/bin/bash -eux
+#!/bin/bash -eu
 
 # This should be run as user app
-if [ "$USER" != "app" ]; then
-    echo "Not correct user"
+
+backend_download_key_path="/app-secure-storage/app/.ssh/app-backend-download.key"
+
+echo "Checking required packages"
+echo "Run"
+echo $'\tsudo apt install build-essential libssl-dev pkg-config'
+echo "if needed"
+echo ""
+
+dpkg -s build-essential libssl-dev pkg-config > /dev/null
+
+if [ $? -ne 0 ]; then
+    echo "Error: required packages are missing"
     exit 1
 fi
 
-chmod 600 /app-secure-storage/app/.ssh/app-manager-download.key
-chmod 600 /app-secure-storage/app/.ssh/app-backend-download.key
+echo "Required packages are installed"
 
-# Move to secure home dir
-cd /app-secure-storage/app
+if [ "$USER" != "app" ]; then
+    echo "Not correct user"
+    echo ""
+    echo "Usage: sudo -u app bash -eux bootsrap-build-server.sh"
+    exit 1
+fi
+
+if [ ! -f "$backend_download_key_path" ]; then
+    echo "Error: $backend_download_key_path does not exist"
+    exit 1
+fi
+
+chmod 600 "$manager_download_key_path"
+chmod 600 "$backend_download_key_path"
 
 # Install Rust if not installed
 if [ ! -f "$HOME/.cargo/env" ]; then
@@ -18,15 +40,23 @@ if [ ! -f "$HOME/.cargo/env" ]; then
 fi
 source "$HOME/.cargo/env"
 
-# Might not be needed
+# Move to secure home dir
 cd /app-secure-storage/app
 
-mkdir -p sources
-cd sources
-git clone -c "core.sshCommand=ssh -i /app-secure-storage/app/.ssh/app-manager-download.key" --depth 1 git@github.com:jutuon/app-manager.git
+mkdir -p tmp
+cd tmp
+if [ ! -d "app-manager" ]; then
+    git clone --depth 1 git@github.com:jutuon/app-manager.git
+fi
 cd app-manager
 cargo build --release
 
 mkdir -p /home/app/binaries
 cp target/release/app-manager /home/app/binaries/app-manager
+chmod u+x /home/app/binaries/app-manager
 mkdir -p /home/app/manager-working-dir
+
+echo "App manager is now installed to /home/app/binaries/app-manager"
+echo "App manager service working directory: /home/app/manager-working-dir"
+echo "Start command: sudo systemctl start app-manager.service"
+echo "Read logs command: sudo journalctl --follow -u app-manager.service"

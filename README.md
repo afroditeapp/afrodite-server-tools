@@ -24,25 +24,31 @@ sudo cryptsetup -y luksFormat hello.txt
 
 cryptsetup luksDump hello.txt
 
-sudo cryptsetup luksOpen hello.txt app-encrypted-data
-sudo cryptsetup luksClose hello.txt app-encrypted-data
-sudo mkfs.ext4 /dev/mapper/app-encrypted-data
+sudo cryptsetup luksOpen hello.txt app-encrypted-data-mapper
+sudo cryptsetup luksClose hello.txt app-encrypted-data-mapper
+sudo mkfs.ext4 /dev/mapper/app-encrypted-data-mapper
 mkdir encrypted-fs
-sudo mount /dev/mapper/app-encrypted-data encrypted-fs
+sudo mount /dev/mapper/app-encrypted-data-mapper encrypted-fs
 
 cd encrypted-fs
 sudo mkdir test
 sudo chown ubuntu:ubuntu test/
 
-sudo umount /dev/mapper/app-encrypted-data
+sudo umount /dev/mapper/app-encrypted-data-mapper
 
 ### Make encrypted fs larger
 
+sudo umount /app-secure-storage
+sudo cryptsetup luksClose encrypted-filesystem.data
 
 sudo truncate --size=+1G encrypted-filesystem.data
-sudo cryptsetup luksOpen encrypted-filesystem.data app-encrypted-data
-sudo e2fsck -f /dev/mapper/app-encrypted-data
-sudo resize2fs /dev/mapper/app-encrypted-data
+
+sudo cryptsetup luksOpen encrypted-filesystem.data app-encrypted-data-mapper
+or
+sudo cryptsetup --key-file - luksOpen encrypted-filesystem.data app-encrypted-data-mapper <<< password
+
+sudo e2fsck -f /dev/mapper/app-encrypted-data-mapper
+sudo resize2fs /dev/mapper/app-encrypted-data-mapper
 
 
 ## Fail2Ban
@@ -82,20 +88,20 @@ cloud-init schema --config-file bob.txt
 Don't use cloud init. Instead:
 
 ```
-sudo adduser app
-sudo adduser app_admin_user_with_ssh
-sudo usermod -aG sudo app_admin_user_with_ssh
-sudo apt install python3 python3-requests ipset git fail2ban
+sudo apt install ansible
+
+
+# Check setup environment instructions
+sudo bash -eu setup-environment.sh
+# Override iptables rules and run the script again with reqired arguments
+sudo bash -eu setup-environment.sh TODO
+
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source "$HOME/.cargo/env"
 sudo apt install build-essential libssl-dev pkg-config
 ```
 
-Follow initial_server_setup.md but do not configure iptables.
-
 Mount app-manager repository using multipass.
-
-Install Rust.
 
 Create script:
 

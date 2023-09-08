@@ -16,6 +16,7 @@
 - name: Check if encrypted filesystem data file exists
   stat:
     path: "{{ encrypted_file_path }}"
+    get_checksum: false
   register: encrypted_file_stat
 - name: Create encrypted data file
   command: "fallocate -l {{ encrypted_file_size }} {{ encrypted_file_path }}"

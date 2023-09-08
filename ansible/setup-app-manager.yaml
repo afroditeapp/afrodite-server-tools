@@ -1,0 +1,16 @@
+---
+- name: Download and install app-manager
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Set variables
+      set_fact:
+        manager_url: http://localhost:5000
+        api_key: password
+    - name: Download app-manager
+      get_url:
+        url: "{{ manager_url }}/manager_api/latest_software?software_options=Backend&download_type=EncryptedBinary"
+        dest: /tmp/app-manager
+        validate_certs: false
+        headers:
+          x-api-key: "{{ api_key }}"
