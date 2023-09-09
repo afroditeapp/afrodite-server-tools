@@ -27,8 +27,3 @@ sudo -u app vim /app-secure-storage/app/.ssh/app-backend-download.key
   sudo vim /home/manager-working-dir/manager_config.toml
   sudo systemctl restart app-manager
 ```
-
-7. After app-manager can get the encryption key for secure data storage,
-   replace the current encryption key for it.
-
-   The default encryption key is `password`
