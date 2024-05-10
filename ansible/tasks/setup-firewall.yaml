@@ -62,13 +62,13 @@
 
 - name: Check if script for custom iptables rules exists
   stat:
-    path: /app-custom/setup-iptables.sh
+    path: /app-custom/setup_iptables.sh
   register: iptables_script_stat
 - name: Setup custom iptables rules
-  command: bash -eux /app-custom/setup-iptables.sh
+  command: bash -eux /app-custom/setup_iptables.sh
   when: iptables_script_stat.stat.exists == True
 - name: Setup default iptables rules
-  command: bash -eux ../setup-tools/setup-iptables.sh
+  command: bash -eux ../setup-tools/setup_iptables.sh
   when: iptables_script_stat.stat.exists == False
 
 - name: Save iptables rules

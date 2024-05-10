@@ -22,9 +22,9 @@ if [ $# == 0 ]; then
         "192.168.0.0/16 like lines"
     echo ""
     echo "Other config:"
-    echo "/app-custom/setup-iptables.sh -" \
+    echo "/app-custom/setup_iptables.sh -" \
         "Override default iptables rules"
-    echo "/app-custom/post-setup.sh -" \
+    echo "/app-custom/post_setup.sh -" \
         "Run custom commands after server init"
     echo "/app-custom/disable_country_fi_filter -" \
         "Disable iptables country FI filter"

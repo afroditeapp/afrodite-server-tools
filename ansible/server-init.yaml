@@ -18,10 +18,10 @@
 
   - name: Check does custom post-setup script exist
     stat:
-      path: /app-custom/post-setup.sh
+      path: /app-custom/post_setup.sh
     register: post_setup_stat
   - name: Run custom post-setup script
-    command: bash -eux /app-custom/post-setup.sh
+    command: bash -eux /app-custom/post_setup.sh
     when: post_setup_stat.stat.exists == True
 
   - debug:
