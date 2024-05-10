@@ -45,7 +45,7 @@ cd /app-secure-storage/app
 mkdir -p tmp
 cd tmp
 if [ ! -d "app-manager" ]; then
-    git clone --depth 1 git@github.com:jutuon/app-manager.git
+    git clone --depth 1 https://github.com/jutuon/app-manager
 fi
 cd app-manager
 cargo build --release
