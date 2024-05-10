@@ -45,7 +45,7 @@ Use domain as Common Name. IP address does not work with Dart and Rustls.
 mkdir server
 openssl genrsa -out server/server.key 4096
 openssl req -new -sha256 -key server/server.key -out server/server.csr
-openssl x509 -req -in server/server.csr -CA root/root.crt -CAkey root/root.key -CAcreateserial -out server/server.crt -days 365 -sha256
+openssl x509 -req -in server/server.csr -CA root/root.crt -CAkey root/root.key -CAcreateserial -out server/server.crt -days 36500 -sha256
 ```
 
 Use scp to copy root/root.crt, server/server.crt and server/server.key to VM.
