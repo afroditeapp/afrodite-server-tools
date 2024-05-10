@@ -48,6 +48,11 @@ openssl req -new -sha256 -key server/server.key -out server/server.csr
 openssl x509 -req -in server/server.csr -CA root/root.crt -CAkey root/root.key -CAcreateserial -out server/server.crt -days 36500 -sha256
 ```
 
+The new certificate can be viewed using command:
+```
+openssl x509 -in server/server.crt -text -noout
+```
+
 Use scp to copy root/root.crt, server/server.crt and server/server.key to VM.
 
 Modify this command to match with your case:
