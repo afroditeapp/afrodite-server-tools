@@ -48,6 +48,7 @@ if [ ! -d "app-manager" ]; then
     git clone --depth 1 https://github.com/jutuon/app-manager
 fi
 cd app-manager
+git pull origin main
 cargo build --release
 
 mkdir -p /home/app/binaries
