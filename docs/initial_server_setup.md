@@ -32,8 +32,8 @@ When username is ubuntu:
 
 Note that github known hosts thing will be asked.
 
-7. Make sure that only specific user has SSH access. (Script will create another
-   user)
+7. Make SSH more secure. (Is this required? Should not, but it is better to use
+more secure settings.)
 
 For example if your username is app_admin_user_with_ssh:
 
@@ -41,6 +41,7 @@ Add
 
 ```
 AllowUsers app_admin_user_with_ssh
+PasswordAuthentication no
 ```
 
 to end of /etc/ssh/sshd_config

@@ -17,7 +17,7 @@ sudo -u app vim /app-secure-storage/app/.ssh/app-backend-download.key
 
 ```
   sudo apt install build-essential libssl-dev pkg-config
-  sudo -u app bash -eux /app-server-tools/setup-tools/bootstrap-build-server.sh
+  sudo -u app bash -eu /app-server-tools/setup-tools/bootstrap-build-server.sh
   sudo systemctl start app-manager
 ```
 

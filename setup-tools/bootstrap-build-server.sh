@@ -31,7 +31,6 @@ if [ ! -f "$backend_download_key_path" ]; then
     exit 1
 fi
 
-chmod 600 "$manager_download_key_path"
 chmod 600 "$backend_download_key_path"
 
 # Install Rust if not installed
