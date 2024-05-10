@@ -52,6 +52,11 @@ git pull origin main
 cargo build --release
 
 mkdir -p /home/app/binaries
+if [ -f "/home/app/binaries/app-manager" ]; then
+    # Remove old binary as copying over it will not work if it is running
+    echo "Removing old binary"
+    rm /home/app/binaries/app-manager
+fi
 cp target/release/app-manager /home/app/binaries/app-manager
 chmod u+x /home/app/binaries/app-manager
 mkdir -p /home/app/manager-working-dir
