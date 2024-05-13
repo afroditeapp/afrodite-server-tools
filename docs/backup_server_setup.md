@@ -21,6 +21,10 @@ Transfer key to backup server and run:
   sudo systemctl start app-manager
 ```
 
+Note that if you have custom TLS certificate it is not needed as
+certificate validation is disabled in `setup-app-manager.yaml`. That is safe
+because GPG checks that binary is not tampered.
+
 4. Configure app-manager properly and restart it
 
 ```
