@@ -89,3 +89,13 @@ If you want to check log output constantly then use:
 ```
 sudo journalctl -u app-manager.service -f
 ```
+
+GPG key which app-manager generates can be exported using:
+```
+sudo -u app bash -l
+gpg --export-secret-keys app-manager-software-builder > build-server-binary-encryption-private-key.gpg
+```
+
+The secret key is needed for binary decryption on servers which download
+binaries from app-manager. Key export seems to have a+r permissions, remove
+file when it is not needed.
