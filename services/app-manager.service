@@ -10,7 +10,7 @@ User=app
 ExecStart=bash -l -c /home/app/binaries/app-manager
 WorkingDirectory=/home/app/manager-working-dir
 Environment="RUST_LOG=info"
-LimitNICE=+19
+LimitNICE=+18
 
 [Install]
 WantedBy=multi-user.target
