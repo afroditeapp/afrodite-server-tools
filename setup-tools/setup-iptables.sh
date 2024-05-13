@@ -9,6 +9,12 @@ iptables -A OUTPUT -o lo -j ACCEPT
 # Allow established connections
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
 
+# Allow SSH access from specific IPs
+iptables -A INPUT -p tcp --dport 22 -m set --match-set ssh_access src -j ACCEPT
+
+# Allow specific IPs to access app-manager
+iptables -A INPUT -p tcp --dport 5000 -m set --match-set app_manager_access src -j ACCEPT
+
 if [ ! -f "/app-custom/disable_country_fi_filter" ]; then
     # Drop all new connections/packets outside Finland.
     iptables -A INPUT -m set ! --match-set country_fi src -j DROP
@@ -18,11 +24,6 @@ fi
 if [ ! -f "/app-custom/ssh_ip.txt" ]; then
     iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 fi
-# Allow SSH access from specific IPs
-iptables -A INPUT -p tcp --dport 22 -m set --match-set ssh_access src -j ACCEPT
-
-# Allow specific IPs to access app-manager
-iptables -A INPUT -p tcp --dport 5000 -m set --match-set app_manager_access src -j ACCEPT
 
 # Allow app-backend access
 iptables -A INPUT -p tcp --dport 3000 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
