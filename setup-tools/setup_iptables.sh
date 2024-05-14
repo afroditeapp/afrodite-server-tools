@@ -6,8 +6,8 @@
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
 
-# Allow established connections
-iptables -A INPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+# Allow established and related connections
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
 # Allow SSH access from specific IPs
 iptables -A INPUT -p tcp --dport 22 -m set --match-set ssh_access src -j ACCEPT
@@ -41,8 +41,8 @@ iptables -A OUTPUT -j DROP
 ip6tables -A INPUT -i lo -j ACCEPT
 ip6tables -A OUTPUT -o lo -j ACCEPT
 
-# Allow established connections
-ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+# Allow established and related connections
+ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
 # Allow all outgoing packets
 ip6tables -A OUTPUT -j ACCEPT
