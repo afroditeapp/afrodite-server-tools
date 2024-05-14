@@ -26,7 +26,7 @@ if [ ! -f "/app-custom/ssh_ip.txt" ]; then
 fi
 
 # Allow app-backend access
-iptables -A INPUT -p tcp --dport 3000 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 
 # Allow all outgoing packets
 iptables -A OUTPUT -j ACCEPT
