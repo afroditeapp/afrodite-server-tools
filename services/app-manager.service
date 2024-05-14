@@ -17,10 +17,8 @@ KillMode=mixed
 TimeoutStopSec=300
 
 MemoryMax=90%
-# If max memory is reached the service is killed and message
-# "Failed with result 'oom-kill'" is printed to logs.
-# If automatic restart is wanted, Restart=on-abnormal can be used.
-# The on-abort and on-watchdog seems to not work.
+# If automatic restart is wanted in 'oom-kill' situations, Restart=on-abnormal
+# can be used. The on-abort and on-watchdog seems to not work.
 
 [Install]
 WantedBy=multi-user.target
