@@ -52,6 +52,11 @@ and run
 sudo systemctl restart sshd
 ```
 
-8. Move to next instructions.
+8. Check that saved iptables rules are correct.
+
+VPS providers might have their own firewall rules before the ones the script
+added. The rules are saved in `/app-iptables` directory.
+
+9. Move to next instructions.
 
 If you are initializing build server then read build_server_setup.md.
