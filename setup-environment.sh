@@ -14,14 +14,14 @@ if [ $# == 0 ]; then
         "after this script."
     echo ""
     echo "Required config:"
-    echo "/app-custom/ssh_ip.txt -" \
-        "IP address whitelist for SSH. File should contain" \
-        "192.168.0.0/16 like lines"
     echo "/app-custom/app_manager_ip.txt -" \
         "IP address whitelist for app-manager. File should contain" \
         "192.168.0.0/16 like lines"
     echo ""
     echo "Other config:"
+    echo "/app-custom/ssh_ip.txt -" \
+        "IP address whitelist for SSH. File should contain" \
+        "192.168.0.0/16 like lines"
     echo "/app-custom/setup_iptables.sh -" \
         "Override default iptables rules"
     echo "/app-custom/post_setup.sh -" \

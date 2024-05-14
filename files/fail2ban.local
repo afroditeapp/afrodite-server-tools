@@ -1,0 +1,5 @@
+
+[DEFAULT]
+
+# Reset bans on reboot
+dbfile = None

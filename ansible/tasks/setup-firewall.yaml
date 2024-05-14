@@ -78,6 +78,14 @@
 
 - name: Copy fail2ban config
   copy:
+    src: ../files/fail2ban.local
+    dest: /etc/fail2ban/fail2ban.local
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy fail2ban jail config
+  copy:
     src: ../files/jail.local
     dest: /etc/fail2ban/jail.local
     owner: root
