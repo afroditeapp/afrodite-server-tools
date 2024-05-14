@@ -23,5 +23,8 @@ MemoryMax=90%
 # If automatic restart is wanted in 'oom-kill' situations, Restart=on-abnormal
 # can be used. The on-abort and on-watchdog seems to not work.
 
+# Allow using privileged ports without root access
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
 [Install]
 WantedBy=multi-user.target
