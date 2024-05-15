@@ -28,12 +28,11 @@ if [ $# == 0 ]; then
         "Run custom commands after server init"
     echo "/app-custom/disable_country_fi_filter -" \
         "Disable iptables country FI filter"
+    echo "/app-custom/disable_non_whitelisted_ssh -" \
+        "Disable non-whitelisted SSH access"
+    echo "/app-custom/enable_backend_ports -" \
+        "Allow port 443 for all IPs and port 3000 after IP country filter"
 
-    exit 1
-fi
-
-if [ ! -f "/app-custom/ssh_ip.txt" ]; then
-    echo "Error: /app-custom/ssh_ip.txt does not exist"
     exit 1
 fi
 
