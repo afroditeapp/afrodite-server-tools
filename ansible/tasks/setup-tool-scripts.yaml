@@ -16,5 +16,4 @@
     path: ../tools/{{ item }}
     mode: "+x"
   with_items:
-    - load-iptables.sh
     - update-country-ipset.sh

@@ -13,10 +13,6 @@
   systemd:
     name: app-manager
     enabled: yes
-- name: Enable 'app-load-iptables' service
-  systemd:
-    name: app-load-iptables
-    enabled: yes
 - name: Enable 'app-disable-swap' service
   systemd:
     name: app-disable-swap

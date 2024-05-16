@@ -7,7 +7,17 @@ current_dir=$(basename "$(pwd)")
 if [ $# == 0 ]; then
     echo "Usage: sudo bash -eu setup-environment.sh encrypted_file_size=5G"
     echo ""
-    echo "Fail2ban will not be enabled by default." \
+    echo "After script completes, setup iptables rules with" \
+        "'sudo bash -eu setup-tools/setup_iptables.sh'." \
+        "The new iptables and ipset rules are not yet saved." \
+        "Install tools to save the rules and load those automatically on boot." \
+        "Run 'sudo apt install iptables-persistent ipset-persistent'." \
+        "Package install asks should the rules be saved." \
+        "After install command 'sudo netfilter-persistent save' can be used to save the rules." \
+        "Now Fail2Ban can be started if wanted." \
+        "It should not be started earlier as it can modify iptables rules."
+    echo ""
+    echo "Fail2Ban will not be enabled by default." \
         "It can be enabled by running" \
         "'sudo systemctl enable fail2ban' and" \
         "'sudo systemctl start fail2ban'" \
@@ -22,8 +32,6 @@ if [ $# == 0 ]; then
     echo "/app-custom/ssh_ip.txt -" \
         "IP address whitelist for SSH. File should contain" \
         "192.168.0.0/16 like lines"
-    echo "/app-custom/setup_iptables.sh -" \
-        "Override default iptables rules"
     echo "/app-custom/post_setup.sh -" \
         "Run custom commands after server init"
     echo "/app-custom/disable_country_fi_filter -" \

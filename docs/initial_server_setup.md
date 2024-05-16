@@ -52,10 +52,11 @@ and run
 sudo systemctl restart sshd
 ```
 
-8. Check that saved iptables rules are correct.
+8. Follow setup-environment.sh instructions about iptables and Fail2Ban.
+Also check that saved iptables rules are correct.
 
 VPS providers might have their own firewall rules before the ones the script
-added. The rules are saved in `/app-iptables` directory.
+setup_iptables.sh added.
 
 9. Move to next instructions.
 
