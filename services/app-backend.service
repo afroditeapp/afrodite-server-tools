@@ -13,7 +13,7 @@ User=app
 ExecStart=bash -l -c /app-secure-storage/app/binaries/app-backend
 WorkingDirectory=/app-secure-storage/app/backend-working-dir
 Environment="RUST_LOG=info"
-LimitNICE=+19
+Nice=19
 LimitNOFILE=1000000000:1000000000
 
 # It is assumed that backend process supports clean shutdown
