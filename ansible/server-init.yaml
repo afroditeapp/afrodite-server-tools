@@ -26,13 +26,5 @@
   - name: Setup encrypted filesystem
     include_tasks: tasks/setup-encrypted-fs.yaml
 
-  - name: Check does custom post-setup script exist
-    stat:
-      path: /app-custom/post_setup.sh
-    register: post_setup_stat
-  - name: Run custom post-setup script
-    command: bash -eux /app-custom/post_setup.sh
-    when: post_setup_stat.stat.exists == True
-
   - debug:
       msg: "Server setup is now complete"

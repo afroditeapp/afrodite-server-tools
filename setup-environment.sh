@@ -32,8 +32,6 @@ if [ $# == 0 ]; then
     echo "/app-custom/ssh_ip.txt -" \
         "IP address whitelist for SSH. File should contain" \
         "192.168.0.0/16 like lines"
-    echo "/app-custom/post_setup.sh -" \
-        "Run custom commands after server init"
     echo "/app-custom/disable_country_fi_filter -" \
         "Disable iptables country FI filter"
     echo "/app-custom/disable_non_whitelisted_ssh -" \
