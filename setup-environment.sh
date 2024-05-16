@@ -13,7 +13,6 @@ if [ $# == 0 ]; then
         "Install tools to save the rules and load those automatically on boot." \
         "Run 'sudo apt install iptables-persistent ipset-persistent'." \
         "Package install asks should the rules be saved." \
-        "After install command 'sudo netfilter-persistent save' can be used to save the rules." \
         "Now Fail2Ban can be started if wanted." \
         "It should not be started earlier as it can modify iptables rules."
     echo ""

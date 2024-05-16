@@ -58,6 +58,20 @@ Also check that saved iptables rules are correct.
 VPS providers might have their own firewall rules before the ones the script
 setup_iptables.sh added.
 
+The iptables rules are saved to /etc/iptables/rules.v4 and
+/etc/iptables/rules.v6. The ipset config is saved to saved to
+/etc/iptables/ipsets.
+
+Saving the rules can be done using
+```
+sudo netfilter-persistent save
+```
+
+Loading the rules can be done using
+```
+sudo netfilter-persistent reload
+```
+
 9. Move to next instructions.
 
 If you are initializing build server then read build_server_setup.md.
