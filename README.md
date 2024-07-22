@@ -132,3 +132,19 @@ Script for editing config:
 
 sudo -u app vim /home/app/manager-working-dir/manager_config.toml
 ```
+
+## Recommended development style
+
+1. Install multipass
+
+2. Create VM
+
+3. Mount projects
+
+4. Create scripts to VM for copying projects from host machine to VM
+
+```
+# The exclude for 'target' directory exists to avoid copying Rust related
+# files if the project is made with Rust.
+rsync -ax --exclude target --exclude .git /host-machine-project-path ~/
+```
