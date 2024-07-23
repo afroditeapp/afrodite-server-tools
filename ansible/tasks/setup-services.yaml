@@ -18,8 +18,9 @@
     name: app-disable-swap
     enabled: yes
     state: started
-- name: Enable 'app-update-country-ipset' timer
-  systemd:
-    name: app-update-country-ipset.timer
-    enabled: yes
-    state: started
+# Disabled for now as latest IP country data from RIPE is from 2020
+# - name: Enable 'app-update-country-ipset' timer
+#   systemd:
+#     name: app-update-country-ipset.timer
+#     enabled: yes
+#     state: started
