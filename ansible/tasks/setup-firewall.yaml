@@ -27,14 +27,14 @@
   when: fi_ip_stat.stat.exists == False
 
 - name: Create 'country_fi' ipset
-  command: "ipset create -exist country_fi hash:net"
+  command: "ipset -exist create country_fi hash:net"
 - name: Setup 'country_fi' ipset
   command: "python3 ../setup-tools/setup-ipset.py \
         --file /home/app/{{ fi_ip_list_name }} \
         --name country_fi"
 
 - name: Create 'ssh_access' ipset
-  command: "ipset create -exist ssh_access hash:net"
+  command: "ipset -exist create ssh_access hash:net"
 - name: Check if config for 'ssh_access' ipset exists
   stat:
     path: /app-custom/{{ ssh_ip_list_name }}
@@ -46,7 +46,7 @@
   when: ssh_access_stat.stat.exists == True
 
 - name: Create 'app_manager_access' ipset
-  command: "ipset create -exist app_manager_access hash:net"
+  command: "ipset -exist create app_manager_access hash:net"
 - name: Check if config for 'app_manager_access' ipset exists
   stat:
     path: /app-custom/{{ app_manager_ip_list_name }}

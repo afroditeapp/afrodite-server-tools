@@ -1,0 +1,12 @@
+# Update country ipset
+
+[Unit]
+Description=Update country ipset
+
+[Timer]
+OnCalendar=monthly
+Persistent=true
+Unit=app-update-country-ipset.service
+
+[Install]
+WantedBy=timers.target

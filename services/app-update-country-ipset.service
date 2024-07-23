@@ -1,0 +1,9 @@
+# Update country ipset
+
+[Unit]
+Description=Update country ipset
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/app-server-tools/tools/update-country-ipset.sh

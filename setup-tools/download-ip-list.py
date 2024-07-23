@@ -31,9 +31,5 @@ for ip in ip_list:
         print(f"Error: invalid IP address")
         exit(-1)
 
-if os.path.isfile(args.file):
-    print("Error: file already exists")
-    exit(-1)
-
 with open(args.file, "w") as file:
     file.writelines(ip + "\n" for ip in ip_list)

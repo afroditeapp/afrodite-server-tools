@@ -22,3 +22,8 @@
     name: app-disable-swap
     enabled: yes
     state: started
+- name: Enable 'app-update-country-ipset' timer
+  systemd:
+    name: app-update-country-ipset.timer
+    enabled: yes
+    state: started
