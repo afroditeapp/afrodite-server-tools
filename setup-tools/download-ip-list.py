@@ -12,7 +12,12 @@ parser.add_argument("-c", "--country", required=True,  type=str, help="Specify c
 args = parser.parse_args()
 
 if args.country != supported_country:
-    print(f"unsupported country {args.country}")
+    print(f"Error: unsupported country {args.country}")
+    exit(1)
+
+if os.getuid() == 0:
+    print("Error: root user detected")
+    exit(1)
 
 # https://stat.ripe.net/docs/02.data-api/country-resource-list.html
 response = requests.get(f"https://stat.ripe.net/data/country-resource-list/data.json?resource={args.country}")
@@ -29,7 +34,7 @@ for ip in ip_list:
             ipaddress.IPv4Network(ip)
     except ipaddress.AddressValueError:
         print(f"Error: invalid IP address")
-        exit(-1)
+        exit(1)
 
 with open(args.file, "w") as file:
     file.writelines(ip + "\n" for ip in ip_list)

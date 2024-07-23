@@ -23,6 +23,7 @@
         ../setup-tools/download-ip-list.py \
         --file /home/app/{{ fi_ip_list_name }} \
        --country fi"
+  become: true
   become_user: app
   when: fi_ip_stat.stat.exists == False
 
