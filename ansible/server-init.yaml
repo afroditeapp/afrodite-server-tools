@@ -11,8 +11,18 @@
     include_tasks: tasks/setup-services.yaml
   - name: Setup tool scripts
     include_tasks: tasks/setup-tool-scripts.yaml
+
+  - name: Check if firewall setup is already done
+    stat:
+      path: "/app-iptables"
+    register: firewall_config_dir
   - name: Setup firewall
     include_tasks: tasks/setup-firewall.yaml
+    when: firewall_config_dir.stat.exists == False
+  - debug:
+      msg: "Firewall setup is already done"
+    when: firewall_config_dir.stat.exists == True
+
   - name: Setup encrypted filesystem
     include_tasks: tasks/setup-encrypted-fs.yaml
 
