@@ -20,15 +20,15 @@ if [ -f "/app-custom/enable_backend_ports" ]; then
     iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 fi
 
+# Allow backend port 3000 if backend ports are enabled
+if [ -f "/app-custom/enable_backend_ports" ]; then
+    iptables -A INPUT -p tcp --dport 3000 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+fi
+
 # Drop all new connections/packets outside Finland if country
 # filtering is not disabled.
 if [ ! -f "/app-custom/disable_country_fi_filter" ]; then
     iptables -A INPUT -m set ! --match-set country_fi src -j DROP
-fi
-
-# Allow backend port 3000 if backend ports are enabled
-if [ -f "/app-custom/enable_backend_ports" ]; then
-    iptables -A INPUT -p tcp --dport 3000 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 fi
 
 # Allow SSH access if specific access is not configured
