@@ -67,9 +67,16 @@ Saving the rules can be done using
 sudo netfilter-persistent save
 ```
 
-Loading the rules can be done using
+Appending the saved rules to current rules can be done using
 ```
 sudo netfilter-persistent reload
+# or
+sudo netfilter-persistent start
+```
+
+Modified IPv4 rules file can be loaded using
+```
+sudo bash -c "iptables-restore < /etc/iptables/rules.v4"
 ```
 
 9. Move to next instructions.
