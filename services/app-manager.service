@@ -10,7 +10,7 @@ User=app
 ExecStart=bash -l -c /home/app/binaries/app-manager
 WorkingDirectory=/home/app/manager-working-dir
 Environment="RUST_LOG=info"
-Nice=18
+Nice=10
 
 # App-manager shutdown can create new processes, so mixed mode is required
 KillMode=mixed
