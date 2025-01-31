@@ -12,8 +12,8 @@ iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 # Allow SSH access from specific IPs
 iptables -A INPUT -p tcp --dport 22 -m set --match-set ssh_access src -j ACCEPT
 
-# Allow specific IPs to access afrodite-manager
-iptables -A INPUT -p tcp --dport 5000 -m set --match-set manager_access src -j ACCEPT
+# Allow specific IPs to access afrodite-backend manager mode instance
+iptables -A INPUT -p tcp --dport 4000 -m set --match-set manager_access src -j ACCEPT
 
 # Allow HTTPS if backend ports are enabled
 if [ -f "/afrodite-custom/enable_backend_ports" ]; then
