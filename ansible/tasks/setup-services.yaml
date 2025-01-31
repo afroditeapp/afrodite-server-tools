@@ -18,7 +18,7 @@
     name: afrodite-disable-swap
     enabled: yes
     state: started
-# Disabled for now as latest IP country data from RIPE is from 2020
+# Disabled for now as latest IP country data for Finland from RIPE is from 2020
 # - name: Enable 'afrodite-update-country-ipset' timer
 #   systemd:
 #     name: afrodite-update-country-ipset.timer
