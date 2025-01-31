@@ -33,7 +33,7 @@ to end of /etc/ssh/sshd_config and run
 sudo systemctl restart sshd
 ```
 
-8. Follow setup-environment.sh instructions about iptables and Fail2Ban.
+5. Follow setup-environment.sh instructions about iptables and Fail2Ban.
 Also check that saved iptables rules are correct.
 
 VPS providers might have their own firewall rules before the ones the script
@@ -60,6 +60,33 @@ Modified IPv4 rules file can be loaded using
 sudo bash -c "iptables-restore < /etc/iptables/rules.v4"
 ```
 
-9. Move to next instructions.
+6. Setup TLS certificates for afrodite-backend manager mode
+  instance. Check instructions in [manager_tls_setup.md](./manager_tls_setup.md).
 
-If you are initializing build server then read build_server_setup.md.
+7. Download
+[afrodite-backend binary](https://github.com/jutuon/afrodite-backend-releases/releases)
+to `/home/afrodite/afrodite-backend`.
+
+8. Configure the manager instance and restart it
+
+```bash
+  # Create default config file
+  sudo systemctl restart afrodite-manager
+  sudo -u afrodite vim /home/afrodite/manager_config.toml
+  sudo systemctl restart afrodite-manager
+```
+
+API password for manager instances can be generated using:
+```bash
+openssl rand -base64 32
+```
+
+Password for encrypted storage can be generated using:
+```bash
+openssl rand -base64 512
+```
+
+If you want to check log output constantly then use:
+```bash
+sudo journalctl -u afrodite-manager.service -f
+```
