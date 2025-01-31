@@ -148,3 +148,7 @@ sudo -u app vim /home/app/manager-working-dir/manager_config.toml
 # files if the project is made with Rust.
 rsync -ax --exclude target --exclude .git /host-machine-project-path ~/
 ```
+
+## License
+
+MIT License or Apache License 2.0
