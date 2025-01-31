@@ -1,0 +1,43 @@
+---
+- name: Download and install afrodite-manager
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Set variables
+      set_fact:
+        manager_url: http://localhost:5000
+        api_key: password
+    - name: Download encrypted afrodite-manager binary
+      get_url:
+        url: "{{ manager_url }}/manager_api/latest_software?software_options=Manager&download_type=EncryptedBinary"
+        dest: /tmp/afrodite-manager-encrypted
+        validate_certs: false
+        headers:
+          x-api-key: "{{ api_key }}"
+    - name: Create binary directory
+      file:
+        path: /home/afrodite/binaries
+        state: directory
+        owner: afrodite
+        group: afrodite
+        mode: 0755
+    - name: Decrypt afrodite-manager binary
+      become: true
+      become_user: afrodite
+      command:
+        cmd: "gpg --output /home/afrodite/binaries/afrodite-manager \
+          --decrypt /tmp/afrodite-manager-encrypted"
+    - name: Create afrodite-manager working directory
+      file:
+        path: /home/afrodite/manager-working-dir
+        state: directory
+        owner: afrodite
+        group: afrodite
+        mode: 0755
+    - name: Set afrodite-manager binary as executable
+      file:
+        path: /home/afrodite/binaries/afrodite-manager
+        state: file
+        owner: afrodite
+        group: afrodite
+        mode: u+x

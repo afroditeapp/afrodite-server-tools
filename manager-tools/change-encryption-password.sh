@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ENCRYPTED_FILE="/app-encrypted-filesystem/encrypted-filesystem.data"
+ENCRYPTED_FILE="/afrodite-encrypted-filesystem/encrypted-filesystem.data"
 
 # Use this script like ./change-encryption-password.sh < key.txt
 # Also run as root

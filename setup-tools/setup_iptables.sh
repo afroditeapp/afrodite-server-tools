@@ -12,27 +12,27 @@ iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 # Allow SSH access from specific IPs
 iptables -A INPUT -p tcp --dport 22 -m set --match-set ssh_access src -j ACCEPT
 
-# Allow specific IPs to access app-manager
-iptables -A INPUT -p tcp --dport 5000 -m set --match-set app_manager_access src -j ACCEPT
+# Allow specific IPs to access afrodite-manager
+iptables -A INPUT -p tcp --dport 5000 -m set --match-set afrodite_manager_access src -j ACCEPT
 
 # Allow HTTPS if backend ports are enabled
-if [ -f "/app-custom/enable_backend_ports" ]; then
+if [ -f "/afrodite-custom/enable_backend_ports" ]; then
     iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 fi
 
 # Allow backend port 3000 if backend ports are enabled
-if [ -f "/app-custom/enable_backend_ports" ]; then
+if [ -f "/afrodite-custom/enable_backend_ports" ]; then
     iptables -A INPUT -p tcp --dport 3000 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 fi
 
 # Drop all new connections/packets outside Finland if country
 # filtering is not disabled.
-if [ ! -f "/app-custom/disable_country_fi_filter" ]; then
+if [ ! -f "/afrodite-custom/disable_country_fi_filter" ]; then
     iptables -A INPUT -m set ! --match-set country_fi src -j DROP
 fi
 
 # Allow SSH access if specific access is not configured
-if [ ! -f "/app-custom/disable_non_whitelisted_ssh" ]; then
+if [ ! -f "/afrodite-custom/disable_non_whitelisted_ssh" ]; then
     iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 fi
 

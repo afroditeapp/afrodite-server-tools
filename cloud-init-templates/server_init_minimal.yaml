@@ -15,7 +15,7 @@ lock_passwd: true
 ssh_redirect_user: true
 
 users:
-  - name: app_admin_user_with_ssh
+  - name: afrodite_admin_user_with_ssh
     lock_passwd: true
     ssh_redirect_user: false
     # TODO

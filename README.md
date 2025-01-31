@@ -1,5 +1,5 @@
-# app-server-tools
-Scripts which will be downloaded when new app VPS instance is created
+# afrodite-server-tools
+Scripts which will be downloaded when new afrodite VPS instance is created
 
 ## Building on MacOS
 
@@ -24,31 +24,31 @@ sudo cryptsetup -y luksFormat hello.txt
 
 cryptsetup luksDump hello.txt
 
-sudo cryptsetup luksOpen hello.txt app-encrypted-data-mapper
-sudo cryptsetup luksClose hello.txt app-encrypted-data-mapper
-sudo mkfs.ext4 /dev/mapper/app-encrypted-data-mapper
+sudo cryptsetup luksOpen hello.txt afrodite-encrypted-data-mapper
+sudo cryptsetup luksClose hello.txt afrodite-encrypted-data-mapper
+sudo mkfs.ext4 /dev/mapper/afrodite-encrypted-data-mapper
 mkdir encrypted-fs
-sudo mount /dev/mapper/app-encrypted-data-mapper encrypted-fs
+sudo mount /dev/mapper/afrodite-encrypted-data-mapper encrypted-fs
 
 cd encrypted-fs
 sudo mkdir test
 sudo chown ubuntu:ubuntu test/
 
-sudo umount /dev/mapper/app-encrypted-data-mapper
+sudo umount /dev/mapper/afrodite-encrypted-data-mapper
 
 ### Make encrypted fs larger
 
-sudo umount /app-secure-storage
+sudo umount /afrodite-secure-storage
 sudo cryptsetup luksClose encrypted-filesystem.data
 
 sudo truncate --size=+1G encrypted-filesystem.data
 
-sudo cryptsetup luksOpen encrypted-filesystem.data app-encrypted-data-mapper
+sudo cryptsetup luksOpen encrypted-filesystem.data afrodite-encrypted-data-mapper
 or
-sudo cryptsetup --key-file - luksOpen encrypted-filesystem.data app-encrypted-data-mapper <<< password
+sudo cryptsetup --key-file - luksOpen encrypted-filesystem.data afrodite-encrypted-data-mapper <<< password
 
-sudo e2fsck -f /dev/mapper/app-encrypted-data-mapper
-sudo resize2fs /dev/mapper/app-encrypted-data-mapper
+sudo e2fsck -f /dev/mapper/afrodite-encrypted-data-mapper
+sudo resize2fs /dev/mapper/afrodite-encrypted-data-mapper
 
 
 ## Fail2Ban
@@ -101,7 +101,7 @@ source "$HOME/.cargo/env"
 sudo apt install build-essential libssl-dev pkg-config
 ```
 
-Mount app-manager repository using multipass.
+Mount afrodite-manager repository using multipass.
 
 Create script:
 
@@ -110,17 +110,17 @@ Create script:
 
 cd
 mkdir -p src
-rsync -av --delete --progress --exclude="/target" /APP-MANAGER-SRC/ ~/src
+rsync -av --delete --progress --exclude="/target" /AFRODITE-MANAGER-SRC/ ~/src
 
 cd ~/src
-cargo build --bin app-manager --release
-sudo -u app mkdir -p /home/app/binaries
-sudo -u app mkdir -p /home/app/manager-working-dir
-sudo systemctl stop app-manager
-sudo cp target/release/app-manager /home/app/binaries
-sudo chown app:app /home/app/binaries/app-manager
-sudo systemctl restart app-manager
-sudo journalctl -u app-manager.service -b -e -f
+cargo build --bin afrodite-manager --release
+sudo -u afrodite mkdir -p /home/afrodite/binaries
+sudo -u afrodite mkdir -p /home/afrodite/manager-working-dir
+sudo systemctl stop afrodite-manager
+sudo cp target/release/afrodite-manager /home/afrodite/binaries
+sudo chown afrodite:afrodite /home/afrodite/binaries/afrodite-manager
+sudo systemctl restart afrodite-manager
+sudo journalctl -u afrodite-manager.service -b -e -f
 ```
 
 And build and start manager using that script.
@@ -130,7 +130,7 @@ Script for editing config:
 ```
 #!/bin/bash -eux
 
-sudo -u app vim /home/app/manager-working-dir/manager_config.toml
+sudo -u afrodite vim /home/afrodite/manager-working-dir/manager_config.toml
 ```
 
 ## Recommended development style

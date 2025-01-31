@@ -1,17 +1,17 @@
-# app-backend systemd service
+# afrodite-backend systemd service
 
 # This service should not be enabled.
-# The app-manager program controls this service.
+# The afrodite-manager program controls this service.
 
 [Unit]
-Description=App backend
-Requires=app-manager.service
+Description=Afrodite backend
+Requires=afrodite-manager.service
 
 [Service]
 Type=simple
-User=app
-ExecStart=bash -l -c /app-secure-storage/app/binaries/app-backend
-WorkingDirectory=/app-secure-storage/app/backend-working-dir
+User=afrodite
+ExecStart=bash -l -c /afrodite-secure-storage/afrodite/binaries/afrodite-backend
+WorkingDirectory=/afrodite-secure-storage/afrodite/backend-working-dir
 Environment="RUST_LOG=info"
 Nice=11
 LimitNOFILE=1000000000:1000000000

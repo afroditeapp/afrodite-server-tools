@@ -5,7 +5,7 @@
       python3,          # Python is for generating IP block list
       python3-requests,
       ipset,
-      git,              # Downloads app-server-tools repository
+      git,              # Downloads afrodite-server-tools repository
       fail2ban,
       libsqlite3-dev,    # For building Python sqlite3 module
     ]

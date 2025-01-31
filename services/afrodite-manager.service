@@ -1,18 +1,18 @@
-# app-manager systemd service
+# afrodite-manager systemd service
 [Unit]
-Description=App server instance manager
+Description=Afrodite server instance manager
 After=network.target
 Conflicts=umount.target
 
 [Service]
 Type=simple
-User=app
-ExecStart=bash -l -c /home/app/binaries/app-manager
-WorkingDirectory=/home/app/manager-working-dir
+User=afrodite
+ExecStart=bash -l -c /home/afrodite/binaries/afrodite-manager
+WorkingDirectory=/home/afrodite/manager-working-dir
 Environment="RUST_LOG=info"
 Nice=10
 
-# App-manager shutdown can create new processes, so mixed mode is required
+# Afrodite-manager shutdown can create new processes, so mixed mode is required
 KillMode=mixed
 TimeoutStopSec=300
 

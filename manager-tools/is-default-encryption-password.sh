@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 
-ENCRYPTED_FILE="/app-encrypted-filesystem/encrypted-filesystem.data"
-MAPPER_FILE="/dev/mapper/app-encrypted-data-mapper"
+ENCRYPTED_FILE="/afrodite-encrypted-filesystem/encrypted-filesystem.data"
+MAPPER_FILE="/dev/mapper/afrodite-encrypted-data-mapper"
 
 # Use this script like ./is-default-encryption-password.sh < key.txt
 # Also run as root

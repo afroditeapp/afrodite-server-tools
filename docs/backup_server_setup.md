@@ -5,29 +5,29 @@
 
 Run in build server:
 ```
-  sudo -u app gpg --output software-builder.key.gpg --export-secret-key app-manager-software-builder
+  sudo -u afrodite gpg --output software-builder.key.gpg --export-secret-key afrodite-manager-software-builder
 ```
 
 Transfer key to backup server and run:
 ```
-  sudo -u app gpg --import software-builder.key.gpg
+  sudo -u afrodite gpg --import software-builder.key.gpg
 ```
 
-3. Install app-manager using script.
+3. Install afrodite-manager using script.
 
 ```
   cd ansible
-  sudo ansible-playbook setup-app-manager.yaml --extra-vars "manager_url=https://localhost:5000 api_key=password"
-  sudo systemctl start app-manager
+  sudo ansible-playbook setup-afrodite-manager.yaml --extra-vars "manager_url=https://localhost:5000 api_key=password"
+  sudo systemctl start afrodite-manager
 ```
 
 Note that if you have custom TLS certificate it is not needed as
-certificate validation is disabled in `setup-app-manager.yaml`. That is safe
+certificate validation is disabled in `setup-afrodite-manager.yaml`. That is safe
 because GPG checks that binary is not tampered.
 
-4. Configure app-manager properly and restart it
+4. Configure afrodite-manager properly and restart it
 
 ```
-  sudo vim /home/app/manager-working-dir/manager_config.toml
-  sudo systemctl restart app-manager
+  sudo vim /home/afrodite/manager-working-dir/manager_config.toml
+  sudo systemctl restart afrodite-manager
 ```

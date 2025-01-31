@@ -2,5 +2,5 @@
 
 # Run as root
 
-umount /app-secure-storage
-cryptsetup luksClose app-encrypted-data-mapper
+umount /afrodite-secure-storage
+cryptsetup luksClose afrodite-encrypted-data-mapper

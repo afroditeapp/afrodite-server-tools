@@ -1,3 +1,3 @@
 #!/bin/bash -eu
 
-systemctl start app-backend.service
+systemctl start afrodite-backend.service

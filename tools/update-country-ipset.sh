@@ -6,9 +6,9 @@ IP_LIST_NAME=fi_ip.txt
 IP_SET=country_fi
 IP_SET_NEW=country_fi_new
 
-sudo -u app python3 \
-    /app-server-tools/setup-tools/download-ip-list.py \
-    --file "/home/app/$IP_LIST_NAME" \
+sudo -u afrodite python3 \
+    /afrodite-server-tools/setup-tools/download-ip-list.py \
+    --file "/home/afrodite/$IP_LIST_NAME" \
     --country fi
 
 if [ $? -ne 0 ]; then
@@ -28,8 +28,8 @@ else
 fi
 
 python3 \
-    /app-server-tools/setup-tools/setup-ipset.py \
-    --file "/home/app/$IP_LIST_NAME" \
+    /afrodite-server-tools/setup-tools/setup-ipset.py \
+    --file "/home/afrodite/$IP_LIST_NAME" \
     --name "$IP_SET_NEW"
 
 if [ $? -ne 0 ]; then

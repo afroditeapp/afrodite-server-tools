@@ -1,8 +1,8 @@
 #!/bin/bash -eu
 
-# This should be run as user app
+# This should be run as user afrodite
 
-backend_download_key_path="/app-secure-storage/app/.ssh/app-backend-download.key"
+backend_download_key_path="/afrodite-secure-storage/afrodite/.ssh/afrodite-backend-download.key"
 
 echo "Checking required packages"
 echo "Run"
@@ -19,10 +19,10 @@ fi
 
 echo "Required packages are installed"
 
-if [ "$USER" != "app" ]; then
+if [ "$USER" != "afrodite" ]; then
     echo "Not correct user"
     echo ""
-    echo "Usage: sudo -u app bash -eux bootsrap-build-server.sh"
+    echo "Usage: sudo -u afrodite bash -eux bootsrap-build-server.sh"
     exit 1
 fi
 
@@ -40,28 +40,28 @@ fi
 source "$HOME/.cargo/env"
 
 # Move to secure home dir
-cd /app-secure-storage/app
+cd /afrodite-secure-storage/afrodite
 
 mkdir -p tmp
 cd tmp
-if [ ! -d "app-manager" ]; then
-    git clone --depth 1 https://github.com/jutuon/app-manager
+if [ ! -d "afrodite-manager" ]; then
+    git clone --depth 1 https://github.com/jutuon/afrodite-manager
 fi
-cd app-manager
+cd afrodite-manager
 git pull origin main
 cargo build --release
 
-mkdir -p /home/app/binaries
-if [ -f "/home/app/binaries/app-manager" ]; then
+mkdir -p /home/afrodite/binaries
+if [ -f "/home/afrodite/binaries/afrodite-manager" ]; then
     # Remove old binary as copying over it will not work if it is running
     echo "Removing old binary"
-    rm /home/app/binaries/app-manager
+    rm /home/afrodite/binaries/afrodite-manager
 fi
-cp target/release/app-manager /home/app/binaries/app-manager
-chmod u+x /home/app/binaries/app-manager
-mkdir -p /home/app/manager-working-dir
+cp target/release/afrodite-manager /home/afrodite/binaries/afrodite-manager
+chmod u+x /home/afrodite/binaries/afrodite-manager
+mkdir -p /home/afrodite/manager-working-dir
 
-echo "App manager is now installed to /home/app/binaries/app-manager"
-echo "App manager service working directory: /home/app/manager-working-dir"
-echo "Start command: sudo systemctl start app-manager.service"
-echo "Read logs command: sudo journalctl --follow -u app-manager.service"
+echo "Afrodite manager is now installed to /home/afrodite/binaries/afrodite-manager"
+echo "Afrodite manager service working directory: /home/afrodite/manager-working-dir"
+echo "Start command: sudo systemctl start afrodite-manager.service"
+echo "Read logs command: sudo journalctl --follow -u afrodite-manager.service"

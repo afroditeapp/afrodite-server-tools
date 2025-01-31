@@ -1,13 +1,13 @@
 ---
 - name: Set variables
   set_fact:
-    encrypted_file_path: /app-encrypted-filesystem/encrypted-filesystem.data
-    mapper_file_path: /dev/mapper/app-encrypted-data-mapper
+    encrypted_file_path: /afrodite-encrypted-filesystem/encrypted-filesystem.data
+    mapper_file_path: /dev/mapper/afrodite-encrypted-data-mapper
     encrypted_file_size: 5G
 
 - name: Create directory for encrypted filesystem data file
   file:
-    path: /app-encrypted-filesystem
+    path: /afrodite-encrypted-filesystem
     state: directory
     owner: root
     group: root
@@ -30,7 +30,7 @@
 - name: Open encryption
   shell:
     cmd: "cryptsetup --key-file - luksOpen {{ encrypted_file_path }} \
-      app-encrypted-data-mapper <<< password"
+      afrodite-encrypted-data-mapper <<< password"
     executable: /bin/bash
   when: encrypted_file_stat.stat.exists == False
 - name: Create filesystem
@@ -39,7 +39,7 @@
 
 - name: Create directory for mounting encrypted filesystem
   file:
-    path: /app-secure-storage
+    path: /afrodite-secure-storage
     state: directory
     owner: root
     group: root
@@ -47,29 +47,29 @@
 
 - name: Check if encrypted filesystem is mounted
   stat:
-    path: /app-secure-storage/app
+    path: /afrodite-secure-storage/afrodite
   register: is_encrypted_filesystem_mounted_stat
 - name: Mount encrypted filesystem
-  command: "mount {{ mapper_file_path }} /app-secure-storage"
+  command: "mount {{ mapper_file_path }} /afrodite-secure-storage"
   when: is_encrypted_filesystem_mounted_stat.stat.exists == False
-- name: Create secure storage directory for 'app' user
+- name: Create secure storage directory for 'afrodite' user
   file:
-    path: /app-secure-storage/app
+    path: /afrodite-secure-storage/afrodite
     state: directory
-    owner: app
-    group: app
+    owner: afrodite
+    group: afrodite
     mode: 0755
 - name: Create directory for binaries
   file:
-    path: /app-secure-storage/app/binaries
+    path: /afrodite-secure-storage/afrodite/binaries
     state: directory
-    owner: app
-    group: app
+    owner: afrodite
+    group: afrodite
     mode: 0755
 - name: Create working directory for backend
   file:
-    path: /app-secure-storage/app/backend-working-dir
+    path: /afrodite-secure-storage/afrodite/backend-working-dir
     state: directory
-    owner: app
-    group: app
+    owner: afrodite
+    group: afrodite
     mode: 0755

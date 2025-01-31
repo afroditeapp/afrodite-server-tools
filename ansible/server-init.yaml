@@ -14,7 +14,7 @@
 
   - name: Check if firewall setup is already done
     stat:
-      path: "/app-iptables"
+      path: "/afrodite-iptables"
     register: firewall_config_dir
   - name: Setup firewall
     include_tasks: tasks/setup-firewall.yaml

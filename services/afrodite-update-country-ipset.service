@@ -6,4 +6,4 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/app-server-tools/tools/update-country-ipset.sh
+ExecStart=/afrodite-server-tools/tools/update-country-ipset.sh

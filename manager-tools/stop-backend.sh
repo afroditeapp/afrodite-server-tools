@@ -1,3 +1,3 @@
 #!/bin/bash -eu
 
-systemctl stop app-backend.service
+systemctl stop afrodite-backend.service

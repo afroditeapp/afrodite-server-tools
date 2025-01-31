@@ -10,19 +10,19 @@ Create file with content like this:
   -----END OPENSSH PRIVATE KEY-----
 ```
 
-sudo -u app mkdir /app-secure-storage/app/.ssh
-sudo -u app vim /app-secure-storage/app/.ssh/app-backend-download.key
+sudo -u afrodite mkdir /afrodite-secure-storage/afrodite/.ssh
+sudo -u afrodite vim /afrodite-secure-storage/afrodite/.ssh/afrodite-backend-download.key
 
 3. Install dependencies and bootstrap build server using script.
 
 ```
   sudo apt install build-essential libssl-dev pkg-config
-  sudo -u app bash -eu /app-server-tools/setup-tools/bootstrap-build-server.sh
-  sudo systemctl start app-manager
+  sudo -u afrodite bash -eu /afrodite-server-tools/setup-tools/bootstrap-build-server.sh
+  sudo systemctl start afrodite-manager
 ```
 
-4. Generate TLS certificate for app-manager. It is best to do this on your local
-machine as you will need to copy these to all VMs which are running app-manager.
+4. Generate TLS certificate for afrodite-manager. It is best to do this on your local
+machine as you will need to copy these to all VMs which are running afrodite-manager.
 
 First, generate a self signed root certificate:
 
@@ -38,7 +38,7 @@ openssl x509 -req -sha256 -days 36500 -in root/root.csr -signkey root/root.key -
 
 (100 years = 36500 days)
 
-Second, sign a second level certificate for app-manager.
+Second, sign a second level certificate for afrodite-manager.
 Use domain as Common Name. IP address does not work with Dart and Rustls.
 
 ```
@@ -63,19 +63,19 @@ scp root/root.crt server/server.crt server/server.key username@remote_host:~/
 On VM:
 
 ```
-sudo -u app mkdir /home/app/manager-working-dir/tls
-sudo cp root.crt server.crt server.key /home/app/manager-working-dir/tls
-sudo chown -R app:app /home/app/manager-working-dir/tls
+sudo -u afrodite mkdir /home/afrodite/manager-working-dir/tls
+sudo cp root.crt server.crt server.key /home/afrodite/manager-working-dir/tls
+sudo chown -R afrodite:afrodite /home/afrodite/manager-working-dir/tls
 ```
 
-5. Configure app-manager properly and restart it
+5. Configure afrodite-manager properly and restart it
 
 ```
-  sudo -u app vim /home/app/manager-working-dir/manager_config.toml
-  sudo systemctl restart app-manager
+  sudo -u afrodite vim /home/afrodite/manager-working-dir/manager_config.toml
+  sudo systemctl restart afrodite-manager
 ```
 
-Password for app-manager can be generated using:
+Password for afrodite-manager can be generated using:
 ```
 openssl rand -base64 32
 ```
@@ -87,15 +87,15 @@ openssl rand -base64 512
 
 If you want to check log output constantly then use:
 ```
-sudo journalctl -u app-manager.service -f
+sudo journalctl -u afrodite-manager.service -f
 ```
 
-GPG key which app-manager generates can be exported using:
+GPG key which afrodite-manager generates can be exported using:
 ```
-sudo -u app bash -l
-gpg --export-secret-keys app-manager-software-builder > build-server-binary-encryption-private-key.gpg
+sudo -u afrodite bash -l
+gpg --export-secret-keys afrodite-manager-software-builder > build-server-binary-encryption-private-key.gpg
 ```
 
 The secret key is needed for binary decryption on servers which download
-binaries from app-manager. Key export seems to have a+r permissions, remove
+binaries from afrodite-manager. Key export seems to have a+r permissions, remove
 file when it is not needed.

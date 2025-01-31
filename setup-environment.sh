@@ -23,39 +23,39 @@ if [ $# == 0 ]; then
         "after this script."
     echo ""
     echo "Required config:"
-    echo "/app-custom/app_manager_ip.txt -" \
-        "IP address whitelist for app-manager. File should contain" \
+    echo "/afrodite-custom/afrodite_manager_ip.txt -" \
+        "IP address whitelist for afrodite-manager. File should contain" \
         "192.168.0.0/16 like lines"
     echo ""
     echo "Other config:"
-    echo "/app-custom/ssh_ip.txt -" \
+    echo "/afrodite-custom/ssh_ip.txt -" \
         "IP address whitelist for SSH. File should contain" \
         "192.168.0.0/16 like lines"
-    echo "/app-custom/disable_country_fi_filter -" \
+    echo "/afrodite-custom/disable_country_fi_filter -" \
         "Disable iptables country FI filter"
-    echo "/app-custom/disable_non_whitelisted_ssh -" \
+    echo "/afrodite-custom/disable_non_whitelisted_ssh -" \
         "Disable non-whitelisted SSH access"
-    echo "/app-custom/enable_backend_ports -" \
+    echo "/afrodite-custom/enable_backend_ports -" \
         "Allow port 443 for all IPs and port 3000 after IP country filter"
 
     exit 1
 fi
 
-if [ ! -f "/app-custom/app_manager_ip.txt" ]; then
-    echo "Error: /app-custom/app_manager_ip.txt does not exist"
+if [ ! -f "/afrodite-custom/afrodite_manager_ip.txt" ]; then
+    echo "Error: /afrodite-custom/afrodite_manager_ip.txt does not exist"
     exit 1
 fi
 
-if [[ "$current_dir" != "app-server-tools" ]]; then
-  echo "Error: Current directory is not 'app-server-tools'. Exiting..."
+if [[ "$current_dir" != "afrodite-server-tools" ]]; then
+  echo "Error: Current directory is not 'afrodite-server-tools'. Exiting..."
   exit 1
 fi
 
 # Install to root
-cp -r ../app-server-tools /
+cp -r ../afrodite-server-tools /
 
 # Continue from installation
-cd /app-server-tools/ansible
+cd /afrodite-server-tools/ansible
 
 ansible-playbook server-init.yaml --extra-vars "$1"
 

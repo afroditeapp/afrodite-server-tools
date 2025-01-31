@@ -3,52 +3,52 @@
   set_fact:
     fi_ip_list_name: fi_ip.txt
     ssh_ip_list_name: ssh_ip.txt
-    app_manager_ip_list_name: app_manager_ip.txt
+    afrodite_manager_ip_list_name: afrodite_manager_ip.txt
 
 - name: Check if IP list for Finland already exists
   stat:
-    path: "/home/app/{{ fi_ip_list_name }}"
+    path: "/home/afrodite/{{ fi_ip_list_name }}"
   register: fi_ip_stat
 - name: Download IP list for Finland
   command:
     cmd: "python3 \
         ../setup-tools/download-ip-list.py \
-        --file /home/app/{{ fi_ip_list_name }} \
+        --file /home/afrodite/{{ fi_ip_list_name }} \
        --country fi"
   become: true
-  become_user: app
+  become_user: afrodite
   when: fi_ip_stat.stat.exists == False
 
 - name: Create 'country_fi' ipset
   command: "ipset -exist create country_fi hash:net"
 - name: Setup 'country_fi' ipset
   command: "python3 ../setup-tools/setup-ipset.py \
-        --file /home/app/{{ fi_ip_list_name }} \
+        --file /home/afrodite/{{ fi_ip_list_name }} \
         --name country_fi"
 
 - name: Create 'ssh_access' ipset
   command: "ipset -exist create ssh_access hash:net"
 - name: Check if config for 'ssh_access' ipset exists
   stat:
-    path: /app-custom/{{ ssh_ip_list_name }}
+    path: /afrodite-custom/{{ ssh_ip_list_name }}
   register: ssh_access_stat
 - name: Setup 'ssh_access' ipset
   command: "python3 ../setup-tools/setup-ipset.py \
-        --file /app-custom/{{ ssh_ip_list_name }} \
+        --file /afrodite-custom/{{ ssh_ip_list_name }} \
         --name ssh_access"
   when: ssh_access_stat.stat.exists == True
 
-- name: Create 'app_manager_access' ipset
-  command: "ipset -exist create app_manager_access hash:net"
-- name: Check if config for 'app_manager_access' ipset exists
+- name: Create 'afrodite_manager_access' ipset
+  command: "ipset -exist create afrodite_manager_access hash:net"
+- name: Check if config for 'afrodite_manager_access' ipset exists
   stat:
-    path: /app-custom/{{ app_manager_ip_list_name }}
-  register: app_manager_access_stat
-- name: Setup 'app_manager_access' ipset
+    path: /afrodite-custom/{{ afrodite_manager_ip_list_name }}
+  register: afrodite_manager_access_stat
+- name: Setup 'afrodite_manager_access' ipset
   command: "python3 ../setup-tools/setup-ipset.py \
-        --file /app-custom/{{ app_manager_ip_list_name }} \
-        --name app_manager_access"
-  when: app_manager_access_stat.stat.exists == True
+        --file /afrodite-custom/{{ afrodite_manager_ip_list_name }} \
+        --name afrodite_manager_access"
+  when: afrodite_manager_access_stat.stat.exists == True
 
 - name: Copy fail2ban config
   copy:
