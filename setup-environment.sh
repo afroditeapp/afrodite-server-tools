@@ -23,9 +23,9 @@ if [ $# == 0 ]; then
         "after this script."
     echo ""
     echo "Required config:"
-    echo "/afrodite-custom/afrodite_manager_ip.txt -" \
-        "IP address whitelist for afrodite-manager. File should contain" \
-        "192.168.0.0/16 like lines"
+    echo "/afrodite-custom/manager_ip.txt -" \
+        "IP address whitelist for afrodite-backend manager mode." \
+        "File should contain 192.168.0.0/16 like lines"
     echo ""
     echo "Other config:"
     echo "/afrodite-custom/ssh_ip.txt -" \
@@ -41,8 +41,8 @@ if [ $# == 0 ]; then
     exit 1
 fi
 
-if [ ! -f "/afrodite-custom/afrodite_manager_ip.txt" ]; then
-    echo "Error: /afrodite-custom/afrodite_manager_ip.txt does not exist"
+if [ ! -f "/afrodite-custom/manager_ip.txt" ]; then
+    echo "Error: /afrodite-custom/manager_ip.txt does not exist"
     exit 1
 fi
 

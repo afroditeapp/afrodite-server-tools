@@ -2,7 +2,7 @@ import subprocess
 import argparse
 
 # The country_fi_new is for the update-country-ipset.sh script
-supported_ipset_names = ["country_fi", "country_fi_new", "afrodite_manager_access", "ssh_access"]
+supported_ipset_names = ["country_fi", "country_fi_new", "manager_access", "ssh_access"]
 
 parser = argparse.ArgumentParser(description="Make ipset from IP list")
 parser.add_argument('-f', '--file', required=True, type=str, help='Load IP list from this file')

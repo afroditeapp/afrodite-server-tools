@@ -3,7 +3,7 @@
   set_fact:
     fi_ip_list_name: fi_ip.txt
     ssh_ip_list_name: ssh_ip.txt
-    afrodite_manager_ip_list_name: afrodite_manager_ip.txt
+    manager_ip_list_name: manager_ip.txt
 
 - name: Check if IP list for Finland already exists
   stat:
@@ -38,17 +38,17 @@
         --name ssh_access"
   when: ssh_access_stat.stat.exists == True
 
-- name: Create 'afrodite_manager_access' ipset
-  command: "ipset -exist create afrodite_manager_access hash:net"
-- name: Check if config for 'afrodite_manager_access' ipset exists
+- name: Create 'manager_access' ipset
+  command: "ipset -exist create manager_access hash:net"
+- name: Check if config for 'manager_access' ipset exists
   stat:
-    path: /afrodite-custom/{{ afrodite_manager_ip_list_name }}
-  register: afrodite_manager_access_stat
-- name: Setup 'afrodite_manager_access' ipset
+    path: /afrodite-custom/{{ manager_ip_list_name }}
+  register: manager_access_stat
+- name: Setup 'manager_access' ipset
   command: "python3 ../setup-tools/setup-ipset.py \
-        --file /afrodite-custom/{{ afrodite_manager_ip_list_name }} \
-        --name afrodite_manager_access"
-  when: afrodite_manager_access_stat.stat.exists == True
+        --file /afrodite-custom/{{ manager_ip_list_name }} \
+        --name manager_access"
+  when: manager_access_stat.stat.exists == True
 
 - name: Copy fail2ban config
   copy:
