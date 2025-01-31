@@ -15,14 +15,9 @@ iptables -A INPUT -p tcp --dport 22 -m set --match-set ssh_access src -j ACCEPT
 # Allow specific IPs to access afrodite-backend manager mode instance
 iptables -A INPUT -p tcp --dport 4000 -m set --match-set manager_access src -j ACCEPT
 
-# Allow HTTPS if backend ports are enabled
-if [ -f "/afrodite-custom/enable_backend_ports" ]; then
+# Allow HTTPS port if enabled
+if [ -f "/afrodite-custom/enable_https_port" ]; then
     iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-fi
-
-# Allow backend port 3000 if backend ports are enabled
-if [ -f "/afrodite-custom/enable_backend_ports" ]; then
-    iptables -A INPUT -p tcp --dport 3000 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 fi
 
 # Drop all new connections/packets outside Finland if country

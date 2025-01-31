@@ -35,8 +35,8 @@ if [ $# == 0 ]; then
         "Disable iptables country FI filter"
     echo "/afrodite-custom/disable_non_whitelisted_ssh -" \
         "Disable non-whitelisted SSH access"
-    echo "/afrodite-custom/enable_backend_ports -" \
-        "Allow port 443 for all IPs and port 3000 after IP country filter"
+    echo "/afrodite-custom/enable_https_port -" \
+        "Allow port 443 for all IPs"
 
     exit 1
 fi
