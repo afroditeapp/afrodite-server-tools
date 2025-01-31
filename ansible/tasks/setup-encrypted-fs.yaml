@@ -59,16 +59,9 @@
     owner: afrodite
     group: afrodite
     mode: 0755
-- name: Create directory for binaries
-  file:
-    path: /afrodite-secure-storage/afrodite/binaries
-    state: directory
-    owner: afrodite
-    group: afrodite
-    mode: 0755
 - name: Create working directory for backend
   file:
-    path: /afrodite-secure-storage/afrodite/backend-working-dir
+    path: /afrodite-secure-storage/afrodite/backend
     state: directory
     owner: afrodite
     group: afrodite
