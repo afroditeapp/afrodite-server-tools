@@ -1,22 +1,22 @@
-# afrodite-backend systemd service
+# afrodite-backend server mode systemd service
 
 # This service should not be enabled.
-# The afrodite-manager program controls this service.
+# The afrodite-backend manager mode instance controls this service.
 
 [Unit]
-Description=Afrodite backend
+Description=Afrodite backend server mode
 Requires=afrodite-manager.service
 
 [Service]
 Type=simple
 User=afrodite
-ExecStart=bash -l -c /afrodite-secure-storage/afrodite/binaries/afrodite-backend
-WorkingDirectory=/afrodite-secure-storage/afrodite/backend-working-dir
+ExecStart=bash -l -c /home/afrodite/afrodite-backend
+WorkingDirectory=/afrodite-secure-storage/afrodite/backend
 Environment="RUST_LOG=info"
 Nice=11
 LimitNOFILE=1000000000:1000000000
 
-# It is assumed that backend process supports clean shutdown
+# It is assumed that the server mode process supports clean shutdown
 KillMode=mixed
 TimeoutStopSec=300
 

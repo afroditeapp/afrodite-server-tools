@@ -1,18 +1,19 @@
-# afrodite-manager systemd service
+# afrodite-backend manager mode systemd service
+
 [Unit]
-Description=Afrodite server instance manager
+Description=Afrodite backend manager mode instance
 After=network.target
 Conflicts=umount.target
 
 [Service]
 Type=simple
 User=afrodite
-ExecStart=bash -l -c /home/afrodite/binaries/afrodite-manager
-WorkingDirectory=/home/afrodite/manager-working-dir
+ExecStart=bash -l -c /home/afrodite/afrodite-backend
+WorkingDirectory=/home/afrodite
 Environment="RUST_LOG=info"
 Nice=10
 
-# Afrodite-manager shutdown can create new processes, so mixed mode is required
+# Manager mode instance shutdown can create new processes, so mixed mode is required
 KillMode=mixed
 TimeoutStopSec=300
 
