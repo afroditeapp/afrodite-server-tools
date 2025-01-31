@@ -1,13 +1,13 @@
 # afrodite-server-tools
-Scripts which will be downloaded when new afrodite VPS instance is created
+Scripts for setuping a new Ubuntu VM for
+[afrodite-backend](https://github.com/jutuon/afrodite-backend).
 
-## Building on MacOS
+## Python script dependencies on macOS
 
-Python script:
-
+```bash
 brew install python3
 pip3 install requests
-
+```
 
 ## LUKS
 
@@ -16,11 +16,13 @@ https://askubuntu.com/questions/58935/how-do-i-create-an-encrypted-filesystem-in
 sudo needed for initial LUKS creation because of bug
 https://bugs.launchpad.net/ubuntu/+source/cryptsetup/+bug/1872056
 
+TODO: Remove the following commands once secure storage expanding support is
+added to the manager mode.
 
+```bash
 fallocate -l 128M /path/to/file
 
 sudo cryptsetup -y luksFormat hello.txt
-
 
 cryptsetup luksDump hello.txt
 
@@ -35,119 +37,74 @@ sudo mkdir test
 sudo chown ubuntu:ubuntu test/
 
 sudo umount /dev/mapper/afrodite-encrypted-data-mapper
+```
 
 ### Make encrypted fs larger
 
+```bash
 sudo umount /afrodite-secure-storage
 sudo cryptsetup luksClose encrypted-filesystem.data
 
 sudo truncate --size=+1G encrypted-filesystem.data
 
 sudo cryptsetup luksOpen encrypted-filesystem.data afrodite-encrypted-data-mapper
-or
+# or
 sudo cryptsetup --key-file - luksOpen encrypted-filesystem.data afrodite-encrypted-data-mapper <<< password
 
 sudo e2fsck -f /dev/mapper/afrodite-encrypted-data-mapper
 sudo resize2fs /dev/mapper/afrodite-encrypted-data-mapper
-
+```
 
 ## Fail2Ban
 
-sudo apt install fail2ban
-cd /etc/fail2ban
-cp jail.conf jail.local
-
-
-Edit file:
-[sshd]
-enable=true
-
-Also perhaps time
-
-findtime = 500h
-maxretry = 2
-
-systemctl enable fail2ban
-systemctl start fail2ban
-
 Check ban status:
 
+```bash
 sudo fail2ban-client status sshd
-
-
-## Check cloud init files
-
-Following command was in systemd logs:
-sudo cloud-init schema --system
-
-Validate:
-cloud-init schema --config-file bob.txt
-
-## Multipass
-
-Don't use cloud init. Instead:
-
-```
-sudo apt install ansible
-
-
-# Check setup environment instructions
-sudo bash -eu setup-environment.sh
-# Override iptables rules and run the script again with reqired arguments
-sudo bash -eu setup-environment.sh TODO
-
-curl https://sh.rustup.rs -sSf | sh -s -- -y
-source "$HOME/.cargo/env"
-sudo apt install build-essential libssl-dev pkg-config
 ```
 
-Mount afrodite-manager repository using multipass.
+## Afrodite backend manager mode local development with multipass
 
-Create script:
+1. Create new multipass VM.
 
-```
+2. On VM, do initial setup with
+[initial_server_setup.md](./docs/initial_server_setup.md)
+instructions.
+
+3. On VM, install required dependencies for building
+[afrodite-backend](https://github.com/jutuon/afrodite-backend).
+
+4. On host, mount `afrodite-backend` repository to VM.
+
+5. On VM, save the following script to a file.
+   Also replace `AFRODITE-BACKEND-SRC` with VM path to the repository.
+
+```bash
 #!/bin/bash -eux
 
 cd
 mkdir -p src
-rsync -av --delete --progress --exclude="/target" /AFRODITE-MANAGER-SRC/ ~/src
+rsync -av --delete --progress --exclude "/target" --exclude ".git" /AFRODITE-BACKEND-SRC/ ~/src
 
 cd ~/src
-cargo build --bin afrodite-manager --release
-sudo -u afrodite mkdir -p /home/afrodite/binaries
-sudo -u afrodite mkdir -p /home/afrodite/manager-working-dir
+cargo build --bin afrodite-backend --release
 sudo systemctl stop afrodite-manager
-sudo cp target/release/afrodite-manager /home/afrodite/binaries
-sudo chown afrodite:afrodite /home/afrodite/binaries/afrodite-manager
+sudo cp target/release/afrodite-backend /home/afrodite
+sudo chown afrodite:afrodite /home/afrodite/afrodite-backend
 sudo systemctl restart afrodite-manager
 sudo journalctl -u afrodite-manager.service -b -e -f
 ```
 
-And build and start manager using that script.
+   Optionally save script for editing config:
 
-Script for editing config:
-
-```
+```bash
 #!/bin/bash -eux
 
-sudo -u afrodite vim /home/afrodite/manager-working-dir/manager_config.toml
+sudo -u afrodite vim /home/afrodite/manager_config.toml
 ```
 
-## Recommended development style
-
-1. Install multipass
-
-2. Create VM
-
-3. Mount projects
-
-4. Create scripts to VM for copying projects from host machine to VM
-
-```
-# The exclude for 'target' directory exists to avoid copying Rust related
-# files if the project is made with Rust.
-rsync -ax --exclude target --exclude .git /host-machine-project-path ~/
-```
+6. Edit code on host and run the first script on VM when code
+   should be tested.
 
 ## License
 
