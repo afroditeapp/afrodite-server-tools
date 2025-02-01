@@ -11,7 +11,7 @@ mkdir root
 # Generate private key:
 openssl genrsa -out root/root.key 4096
 # Create certificate signing request (CSR):
-openssl req -new -sha256 -key root/root.key -out root/root.csr
+openssl req -extensions v3_req -new -sha256 -key root/root.key -out root/root.csr
 # Sign root certificate:
 openssl x509 -req -sha256 -days 36500 -in root/root.csr -signkey root/root.key -out root/root.crt
 ```
@@ -24,7 +24,7 @@ Use domain as Common Name. IP address does not work with Dart and Rustls.
 ```bash
 mkdir server
 openssl genrsa -out server/server.key 4096
-openssl req -new -sha256 -key server/server.key -out server/server.csr
+openssl req -extensions v3_req -new -sha256 -key server/server.key -out server/server.csr
 openssl x509 -req -in server/server.csr -CA root/root.crt -CAkey root/root.key -CAcreateserial -out server/server.crt -days 36500 -sha256
 ```
 
