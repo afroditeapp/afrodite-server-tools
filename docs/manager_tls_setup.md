@@ -4,6 +4,26 @@ Generate TLS certificate for afrodite-backend manager mode instances.
 It is best to do this on your local machine as you will need to copy these to
 all VMs which are running an manager instance.
 
+## rustls-cert-gen
+
+1. Install [rustls-cert-gen](https://crates.io/crates/rustls-cert-gen).
+2. From the following command, replace
+   `OUTPUT_DIR`, `ADDRESS`, `COUNTRY` and `ORGANIZATION`
+   with wanted values and run the edited command.
+
+```bash
+rustls-cert-gen -o OUTPUT_DIR --ecdsa-p384 --san=ADDRESS --country-name=COUNTRY --organization-name=ORGANIZATION
+```
+
+## OpenSSL
+
+The following instructions do not work with Rustls which is the only
+supported TLS library for manager TLS connections.
+
+TODO: The following instructions should be updated so that generated
+second level sertificate has SAN (Subject Alternative Name) certificate field.
+Rustls seems to require the field. CN field can be empty.
+
 First, generate a self signed root certificate:
 
 ```bash
