@@ -8,8 +8,7 @@
     - change-encryption-password.sh
     - open-encryption.sh
     - close-encryption.sh
-    - start-backend.sh
-    - stop-backend.sh
+    - systemctl-access.sh
     - print-logs.sh
 - name: Add excecutable permissions to scripts in 'tools' directory
   file:

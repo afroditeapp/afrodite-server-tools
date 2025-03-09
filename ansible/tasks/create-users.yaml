@@ -16,7 +16,6 @@
       /afrodite-server-tools/manager-tools/change-encryption-password.sh, \
       /afrodite-server-tools/manager-tools/open-encryption.sh, \
       /afrodite-server-tools/manager-tools/close-encryption.sh, \
-      /afrodite-server-tools/manager-tools/start-backend.sh, \
-      /afrodite-server-tools/manager-tools/stop-backend.sh, \
+      /afrodite-server-tools/manager-tools/systemctl-access.sh, \
       /afrodite-server-tools/manager-tools/print-logs.sh"
     validate: 'visudo -cf %s'
