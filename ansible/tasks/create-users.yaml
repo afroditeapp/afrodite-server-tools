@@ -12,10 +12,7 @@
     regexp: '^afrodite '
     line: "afrodite ALL=(ALL) NOPASSWD: \
       /usr/sbin/reboot, \
-      /afrodite-server-tools/manager-tools/is-default-encryption-password.sh, \
-      /afrodite-server-tools/manager-tools/change-encryption-password.sh, \
-      /afrodite-server-tools/manager-tools/open-encryption.sh, \
-      /afrodite-server-tools/manager-tools/close-encryption.sh, \
+      /afrodite-server-tools/manager-tools/secure-storage.sh, \
       /afrodite-server-tools/manager-tools/systemctl-access.sh, \
       /afrodite-server-tools/manager-tools/print-logs.sh"
     validate: 'visudo -cf %s'
