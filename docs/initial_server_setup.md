@@ -11,7 +11,7 @@ sudo apt install git ansible
 3. Login to server and run inital setup script.
 
 ```bash
-  cd /home/ubuntu && sudo -u ubuntu git clone --depth 1 https://github.com/jutuon/afrodite-server-tools
+  cd /home/ubuntu && sudo -u ubuntu git clone --depth 1 https://github.com/afroditeapp/afrodite-server-tools
   cd /home/ubuntu/afrodite-server-tools
   # And run script and read instructions
   sudo bash -eu /home/ubuntu/afrodite-server-tools/setup-environment.sh
@@ -64,7 +64,7 @@ sudo bash -c "iptables-restore < /etc/iptables/rules.v4"
   instance. Check instructions in [manager_tls_setup.md](./manager_tls_setup.md).
 
 7. Download
-[afrodite-backend binary](https://github.com/jutuon/afrodite-backend-releases/releases)
+[afrodite-backend binary](https://github.com/afroditeapp/afrodite-backend/releases)
 to `/home/afrodite/afrodite-backend`.
 
 8. Configure the manager instance and restart it

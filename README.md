@@ -1,6 +1,6 @@
 # afrodite-server-tools
 Scripts for setuping a new Ubuntu VM for
-[afrodite-backend](https://github.com/jutuon/afrodite-backend).
+[afrodite-backend](https://github.com/afroditeapp/afrodite-backend).
 
 ## Python script dependencies on macOS
 
@@ -72,7 +72,7 @@ sudo fail2ban-client status sshd
 instructions.
 
 3. On VM, install required dependencies for building
-[afrodite-backend](https://github.com/jutuon/afrodite-backend).
+[afrodite-backend](https://github.com/afroditeapp/afrodite-backend).
 
 4. On host, mount `afrodite-backend` repository to VM.
 
