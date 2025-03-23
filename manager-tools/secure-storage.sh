@@ -34,7 +34,7 @@ function setup_global_variables() {
 
 # Input: STDIN = storage password, $1 = STORAGE_SIZE_IN_BYTES
 function extend_size_and_open_storage_and_quit() {
-    set -x
+    set -e
 
     current_storage_size=$(stat --printf="%s" "$g_encrypted_file")
 
@@ -59,21 +59,21 @@ function extend_size_and_open_storage_and_quit() {
 }
 
 function close_storage_and_quit() {
-    set -x
+    set -e
     umount "$g_storage_dir"
     cryptsetup luksClose "$g_mapper_name"
     exit 0
 }
 
 function is_default_password_and_quit() {
-    set -x
+    set -e
     cryptsetup --test-passphrase --key-file - luksOpen "$g_encrypted_file" <<< "$DEFAULT_STORAGE_PASSWORD"
     exit 0
 }
 
 ### Input: STDIN = new storage password
 function change_default_password_and_quit() {
-    # The bash option -x is not set to allow shred to run when
+    # The bash option -e is not set to allow shred to run when
     # cryptsetup command fails.
 
     key_dir="/afrodite-encrypted-filesystem/keyfs"
