@@ -119,10 +119,10 @@ else
 fi
 
 case "$1" in
-    "$CMD_EXTEND_SIZE_AND_OPEN") extend_size_and_open_storage_and_quit "$storage_size_in_bytes" ;;
+    "$CMD_EXTEND_SIZE_AND_OPEN") cat | extend_size_and_open_storage_and_quit "$storage_size_in_bytes" ;;
     "$CMD_CLOSE") close_storage_and_quit ;;
     "$CMD_IS_DEFAULT_PASSWORD") is_default_password_and_quit ;;
-    "$CMD_CHANGE_DEFAULT_PASSWORD") change_default_password_and_quit ;;
+    "$CMD_CHANGE_DEFAULT_PASSWORD") cat | change_default_password_and_quit ;;
     *) echo "Unsupported command '$1'"
        exit 1
     ;;
