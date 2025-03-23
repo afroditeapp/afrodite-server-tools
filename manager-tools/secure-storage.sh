@@ -37,15 +37,20 @@ function extend_size_and_open_storage_and_quit() {
     set -x
 
     current_storage_size=$(stat --printf="%s" "$g_encrypted_file")
-    allocate_storage=$(test "$1" -gt "$current_storage_size")
 
-    if $allocate_storage; then
+    if [ "$1" -gt "$current_storage_size" ]; then
+        allocate_storage=true
+    else
+        allocate_storage=false
+    fi
+
+    if [ "$allocate_storage" = true ]; then
         fallocate -l "$1" "$g_encrypted_file"
     fi
 
     cryptsetup --key-file - luksOpen "$g_encrypted_file" "$g_mapper_name"
 
-    if $allocate_storage; then
+    if [ "$allocate_storage" = true ]; then
         resize2fs "$g_mapper_file"
     fi
 
