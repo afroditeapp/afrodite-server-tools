@@ -82,7 +82,7 @@ MAX_PARTICIPANTS=4
 
 custom-config.js
 
-```json
+```js
 // Privacy
 config.analytics = { disabled: true };
 config.disableThirdPartyRequests = true;
@@ -122,9 +122,9 @@ config.toolbarButtons = [
 ];
 ```
 
-custom-interface_config.json
+custom-interface_config.js
 
-```json
+```js
 interfaceConfig.SHOW_JITSI_WATERMARK = false;
 ```
 
