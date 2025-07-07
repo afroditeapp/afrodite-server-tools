@@ -12,7 +12,7 @@ Type=simple
 User=afrodite
 ExecStart=bash -l -c /home/afrodite/afrodite-backend
 WorkingDirectory=/afrodite-secure-storage/afrodite/backend
-Environment="RUST_LOG=info"
+Environment="RUST_LOG=info,rustls=error"
 Nice=11
 LimitNOFILE=1000000000:1000000000
 
