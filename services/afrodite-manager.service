@@ -8,7 +8,7 @@ Conflicts=umount.target
 [Service]
 Type=simple
 User=afrodite
-ExecStart=bash -l -c "/home/afrodite/afrodite-backend manager"
+ExecStart=bash -l -c "/home/afrodite/afrodite-backend manager --manager-config manager_config.toml"
 WorkingDirectory=/home/afrodite
 Environment="RUST_LOG=info"
 Nice=10
