@@ -10,7 +10,7 @@ Requires=afrodite-manager.service
 [Service]
 Type=simple
 User=afrodite
-ExecStart=bash -l -c /home/afrodite/afrodite-backend server
+ExecStart=bash -l -c "/home/afrodite/afrodite-backend server"
 WorkingDirectory=/afrodite-secure-storage/afrodite/backend
 Environment="RUST_LOG=info,rustls=error"
 Nice=11
