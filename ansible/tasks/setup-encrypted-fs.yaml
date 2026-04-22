@@ -58,10 +58,3 @@
     owner: afrodite
     group: afrodite
     mode: 0755
-- name: Create working directory for backend
-  file:
-    path: /afrodite-secure-storage/afrodite/backend
-    state: directory
-    owner: afrodite
-    group: afrodite
-    mode: 0755

@@ -11,7 +11,7 @@
       encrypted_fs_enabled: "{{ encrypted_file_size != '0' }}"
   - name: Set backend working directory variable
     set_fact:
-      backend_working_directory: "{{ '/afrodite-secure-storage/afrodite/backend' if (encrypted_fs_enabled | bool) else '/home/afrodite' }}"
+      backend_working_directory: "{{ '/afrodite-secure-storage/afrodite' if (encrypted_fs_enabled | bool) else '/home/afrodite' }}"
   - name: Download dependencies
     include_tasks: tasks/apt-dependencies.yaml
   - name: Create users
