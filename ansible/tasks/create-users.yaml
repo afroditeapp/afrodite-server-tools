@@ -12,6 +12,7 @@
     regexp: '^afrodite '
     line: "afrodite ALL=(ALL) NOPASSWD: \
       /usr/sbin/reboot, \
+      /usr/sbin/shutdown, \
       /afrodite-server-tools/manager-tools/secure-storage.sh, \
       /afrodite-server-tools/manager-tools/systemctl-access.sh, \
       /afrodite-server-tools/manager-tools/print-logs.sh"
