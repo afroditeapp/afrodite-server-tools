@@ -11,7 +11,7 @@ Requires=afrodite-manager.service
 Type=simple
 User=afrodite
 ExecStart=bash -l -c "/home/afrodite/afrodite-backend server"
-WorkingDirectory=/afrodite-secure-storage/afrodite/backend
+WorkingDirectory=/home/afrodite
 Environment="RUST_LOG=info,rustls=error"
 Nice=11
 LimitNOFILE=1000000000:1000000000

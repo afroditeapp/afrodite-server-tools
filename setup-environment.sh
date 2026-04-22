@@ -6,6 +6,9 @@ current_dir=$(basename "$(pwd)")
 
 if [ $# == 0 ]; then
     echo "Usage: sudo bash -eu setup-environment.sh encrypted_file_size=5G"
+    echo "       sudo bash -eu setup-environment.sh encrypted_file_size=0"
+    echo ""
+    echo "Use encrypted_file_size=0 to skip secure storage setup."
     echo ""
     echo "After script completes, setup iptables rules with" \
         "'sudo bash -eu setup-tools/setup_iptables.sh'." \

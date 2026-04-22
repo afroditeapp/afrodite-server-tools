@@ -6,6 +6,11 @@
     owner: root
     group: root
     mode: 0644
+- name: Set backend service working directory
+  lineinfile:
+    path: /etc/systemd/system/afrodite-backend.service
+    regexp: '^WorkingDirectory='
+    line: "WorkingDirectory={{ backend_working_directory }}"
 - name: Reload systemd
   systemd:
     daemon_reload: yes

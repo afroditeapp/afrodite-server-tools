@@ -3,7 +3,6 @@
   set_fact:
     encrypted_file_path: /afrodite-encrypted-filesystem/encrypted-filesystem.data
     mapper_file_path: /dev/mapper/afrodite-encrypted-data-mapper
-    encrypted_file_size: 5G
 
 - name: Create directory for encrypted filesystem data file
   file:

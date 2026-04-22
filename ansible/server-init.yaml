@@ -3,6 +3,15 @@
   hosts: localhost
   connection: local
   tasks:
+  - name: Make sure that encrypted_file_size variable is defined
+    set_fact:
+      encrypted_file_size: "{{ encrypted_file_size | default('0') | string }}"
+  - name: Set encrypted filesystem enabled variable
+    set_fact:
+      encrypted_fs_enabled: "{{ encrypted_file_size != '0' }}"
+  - name: Set backend working directory variable
+    set_fact:
+      backend_working_directory: "{{ '/afrodite-secure-storage/afrodite/backend' if (encrypted_fs_enabled | bool) else '/home/afrodite' }}"
   - name: Download dependencies
     include_tasks: tasks/apt-dependencies.yaml
   - name: Create users
@@ -25,6 +34,11 @@
 
   - name: Setup encrypted filesystem
     include_tasks: tasks/setup-encrypted-fs.yaml
+    when: encrypted_fs_enabled | bool
+
+  - debug:
+      msg: "Encrypted filesystem setup skipped (encrypted_file_size={{ encrypted_file_size }})"
+    when: not (encrypted_fs_enabled | bool)
 
   - debug:
       msg: "Server setup is now complete"
