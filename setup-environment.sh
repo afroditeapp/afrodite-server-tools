@@ -44,6 +44,12 @@ if [ $# == 0 ]; then
     exit 1
 fi
 
+if [[ ! "$1" =~ ^encrypted_file_size=(0|[1-9][0-9]*[KMGT]?)$ ]]; then
+    echo "Error: Invalid value '$1'"
+    echo "Expected format: encrypted_file_size=0 or encrypted_file_size=<positive_number>[K|M|G|T]"
+    exit 1
+fi
+
 if [ ! -f "/afrodite-custom/manager_ip.txt" ]; then
     echo "Error: /afrodite-custom/manager_ip.txt does not exist"
     exit 1
